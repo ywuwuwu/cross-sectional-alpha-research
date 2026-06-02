@@ -1,0 +1,15 @@
+# Example local data configuration.
+# Copy this file to config/data_paths.yaml and edit the paths locally.
+# config/data_paths.yaml is ignored by git.
+
+data_root: /absolute/path/to/private/data
+data_5m_root: /absolute/path/to/private/data_5m
+output_root: reports
+
+# Example local datasets expected by the project:
+# - data_daily
+# - data_ret
+# - data_industry
+# - data_barra
+# - data_ud_new
+# - date.pkl

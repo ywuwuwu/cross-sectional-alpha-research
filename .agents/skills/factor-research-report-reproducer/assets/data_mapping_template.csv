@@ -1,0 +1,13 @@
+report_requirement,local_source,local_field,transformation,availability_status,assumption_or_risk
+price_open,data/data_daily,open,,available,
+price_close,data/data_daily,close,,available,
+price_high,data/data_daily,high,,available,
+price_low,data/data_daily,low,,available,
+volume,data/data_daily,volume,,available,
+turnover,data/data_daily,turnover_ratio,,available,
+money,data/data_daily,money,,available,
+forward_return,data/data_ret,1vwap_pct,used by BacktestEngine,available,
+status_filter,data/data_ud_new,"paused,zt,dt",filter paused/limit names,available,
+size_neutralization,data/data_barra,size,or market cap field if present,available_if_file_exists,
+industry_neutralization,data/data_industry,industry,dummy variables,available_if_file_exists,
+intraday_bars,data_5m,"datetime,open,close,high,low,volume,money",for high-frequency factors,available_if_period_matches,

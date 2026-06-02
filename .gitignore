@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+.env
+.env.*
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
+
+# Private data
+data/
+data_5m/
+data.pkl
+date.pkl
+*.pkl
+*.pickle
+*.parquet
+*.feather
+*.h5
+*.hdf5
+
+# Compressed private data
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.rar
+
+# Research reports / copyrighted PDFs
+*.pdf
+
+# Local config
+config/data_paths.yaml
+
+# Generated reports and backtest outputs
+reports/*
+!reports/.gitkeep
+
+# Working notebooks with private outputs
+*.ipynb
+!notebooks/demo_synthetic.ipynb
+
+# Large generated artifacts
+*.log
+*.tmp
