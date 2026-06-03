@@ -45,9 +45,12 @@ date.pkl
 config/data_paths.yaml
 
 # Generated reports and backtest outputs
-reports/*
+reports/*.csv
+reports/**/**/*.csv
+reports/**/**/**/*.csv
 !reports/.gitkeep
 
+factor_mining/
 # Working notebooks with private outputs
 *.ipynb
 !notebooks/demo_synthetic.ipynb
