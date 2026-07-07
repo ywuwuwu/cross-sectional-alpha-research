@@ -86,6 +86,20 @@ This repository includes several local-data reproductions of factor research ide
 
 These strategies should be interpreted as **local-data validations**, not exact replications of the original reports. Exact performance comparison is only valid when universe, sample period, data frequency, filters, transaction costs, and portfolio construction rules match the original report.
 
+## Public Case Studies
+
+The repository publishes curated examples instead of the full raw `reports/` directory.
+
+| Item | Location | Purpose |
+|---|---|---|
+| PaperUBL sample report | `examples/sample_outputs/paper_ubl/report.md` | Public sample output with metrics and figures |
+| PaperUBL case study | `docs/case_studies/PaperUBL.md` | Current public flagship reproduction example |
+| UBL improvement track | `docs/case_studies/UBL.md` | Documents the next stronger UBL research direction without overclaiming unfinished results |
+| Strategy comparison | `docs/case_studies/strategy_comparison.md` | Explains which strategy results are publishable now and which remain experimental |
+| Report references | `docs/report_references.md` | Documents public references and internal report handling policy |
+
+The current public sample focuses on `PaperUBL`. A stronger modified `UBL` strategy is planned as a later flagship case study after additional validation, drawdown reduction, transaction-cost testing, and walk-forward checks.
+
 ## Reproduction Modes
 
 The project supports four reproduction statuses.
@@ -210,6 +224,16 @@ backtest_results.csv
 ```
 
 Generated `reports/` outputs are ignored by default to avoid publishing private data-derived results.
+
+For GitHub, publish only cleaned sample outputs such as:
+
+```
+examples/sample_outputs/paper_ubl/
+docs/case_studies/
+docs/report_references.md
+```
+
+Do not publish raw full `reports/` folders until smoke tests, failed experiments, private paths, and experimental strategy labels have been reviewed.
 
 ## Using the Codex Skill
 

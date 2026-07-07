@@ -8,11 +8,22 @@ This project focuses on reproducing the analytical logic of factor research repo
 
 | Module | Public Description | Public Status |
 |---|---|---|
-| Module 1 | Reversal factor research |  |
-| Module 2 | Turnover stability factor research |  |
+| Module 1 | Reversal factor research | Internal source not redistributed |
+| Module 2 | Turnover stability factor research | Internal source not redistributed |
 | Module 3 | CPV / price-volume correlation factor research | https://www.scribd.com/document/840833885 |
 | Module 4 | Factor segmentation and refinement research | https://bigquant.com/wiki/doc/itpJKGIA6a |
 | Module 5 | Volume-adjusted momentum factor research | https://bigquant.com/wiki/doc/b15vA5ca1d |
+
+## Curated public outputs
+
+The repository publishes only cleaned public examples, not the full local `reports/` directory.
+
+| Output | Location | Notes |
+|---|---|---|
+| PaperUBL sample report | `examples/sample_outputs/paper_ubl/report.md` | Curated local-data sample with figures |
+| PaperUBL case study | `docs/case_studies/PaperUBL.md` | Current public flagship sample |
+| UBL improvement track | `docs/case_studies/UBL.md` | Work-in-progress track; stronger result to be published later |
+| Strategy comparison | `docs/case_studies/strategy_comparison.md` | Explains publish/withhold decisions |
 
 ## Public reproduction principle
 
