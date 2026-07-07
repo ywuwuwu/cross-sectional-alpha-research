@@ -9,72 +9,326 @@
     "backtest",
     "results",
     "assumptions",
-    "conclusion"
+    "conclusion",
+    "outputs",
+    "math_summary"
   ],
   "properties": {
-    "factor_name": { "type": "string" },
-    "source_report": { "type": "string" },
+    "factor_name": {
+      "type": "string"
+    },
+    "source_report": {
+      "type": "string"
+    },
     "reproduction_mode": {
       "type": "string",
-      "enum": ["exact_reproduction", "local_data_reproduction"]
+      "enum": [
+        "exact_reproduction",
+        "local_data_reproduction",
+        "partial_reproduction",
+        "implementation_only_reproduction"
+      ]
     },
     "formula_level": {
       "type": "object",
       "properties": {
-        "report_formula": { "type": "string" },
-        "implemented_formula": { "type": "string" },
-        "differences": { "type": "array", "items": { "type": "string" } }
+        "report_formula": {
+          "type": "string"
+        },
+        "implemented_formula": {
+          "type": "string"
+        },
+        "differences": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     },
     "data_mapping": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["report_requirement", "local_source", "local_field", "status"],
+        "required": [
+          "report_requirement",
+          "local_source",
+          "local_field",
+          "status"
+        ],
         "properties": {
-          "report_requirement": { "type": "string" },
-          "local_source": { "type": "string" },
-          "local_field": { "type": "string" },
-          "transformation": { "type": "string" },
-          "status": { "type": "string" },
-          "assumption_or_risk": { "type": "string" }
+          "report_requirement": {
+            "type": "string"
+          },
+          "local_source": {
+            "type": "string"
+          },
+          "local_field": {
+            "type": "string"
+          },
+          "transformation": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "assumption_or_risk": {
+            "type": "string"
+          }
         }
       }
     },
     "implementation": {
       "type": "object",
       "properties": {
-        "strategy_file": { "type": "string" },
-        "strategy_class": { "type": "string" },
-        "runner_command": { "type": "string" }
+        "strategy_file": {
+          "type": "string"
+        },
+        "strategy_class": {
+          "type": "string"
+        },
+        "runner_command": {
+          "type": "string"
+        }
       }
     },
     "backtest": {
       "type": "object",
       "properties": {
-        "start_date": { "type": "string" },
-        "end_date": { "type": "string" },
+        "start_date": {
+          "type": "string"
+        },
+        "end_date": {
+          "type": "string"
+        },
         "rebalance_freq": {},
-        "top_n": { "type": "integer" },
-        "n_groups": { "type": "integer" },
-        "costs_enabled": { "type": "boolean" }
+        "top_n": {
+          "type": "integer"
+        },
+        "n_groups": {
+          "type": "integer"
+        },
+        "costs_enabled": {
+          "type": "boolean"
+        }
       }
     },
     "results": {
       "type": "object",
       "properties": {
-        "total_return": { "type": ["number", "null"] },
-        "annual_return": { "type": ["number", "null"] },
-        "sharpe_ratio": { "type": ["number", "null"] },
-        "max_drawdown": { "type": ["number", "null"] },
-        "ic_mean": { "type": ["number", "null"] },
-        "ic_std": { "type": ["number", "null"] },
-        "ir": { "type": ["number", "null"] },
-        "ic_win_rate": { "type": ["number", "null"] },
-        "stable_layering": { "type": ["boolean", "null"] }
+        "total_return": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "annual_return": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "sharpe_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "max_drawdown": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "ic_mean": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "ic_std": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "ir": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "ic_win_rate": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "stable_layering": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
       }
     },
-    "assumptions": { "type": "array", "items": { "type": "string" } },
-    "conclusion": { "type": "string" }
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "conclusion": {
+      "type": "string"
+    },
+    "outputs": {
+      "type": "object",
+      "required": [
+        "data_availability_report",
+        "data_mapping",
+        "final_reproduction_report",
+        "reproduction_summary"
+      ],
+      "properties": {
+        "data_availability_report": {
+          "type": "string"
+        },
+        "data_mapping": {
+          "type": "string"
+        },
+        "final_reproduction_report": {
+          "type": "string"
+        },
+        "reproduction_summary": {
+          "type": "string"
+        }
+      }
+    },
+    "math_summary": {
+      "type": "object",
+      "required": [
+        "core_formula",
+        "notation",
+        "formula_steps",
+        "financial_interpretation",
+        "math_to_code_mapping",
+        "local_data_substitution",
+        "implementation_pseudocode",
+        "validation_checks",
+        "limitations"
+      ],
+      "properties": {
+        "core_formula": {
+          "type": "string"
+        },
+        "notation": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string"
+              },
+              "meaning": {
+                "type": "string"
+              },
+              "data_requirement": {
+                "type": "string"
+              },
+              "local_proxy": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "formula_steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "step": {
+                "type": [
+                  "integer",
+                  "string"
+                ]
+              },
+              "mathematical_operation": {
+                "type": "string"
+              },
+              "financial_meaning": {
+                "type": "string"
+              },
+              "implementation_mapping": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "financial_interpretation": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "math_to_code_mapping": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "mathematical_component": {
+                "type": "string"
+              },
+              "report_logic": {
+                "type": "string"
+              },
+              "local_implementation": {
+                "type": "string"
+              },
+              "code_location": {
+                "type": "string"
+              },
+              "notes": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "local_data_substitution": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "report_requirement": {
+                "type": "string"
+              },
+              "local_data_or_proxy": {
+                "type": "string"
+              },
+              "match_quality": {
+                "type": "string"
+              },
+              "expected_impact": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "implementation_pseudocode": {
+          "type": "string"
+        },
+        "validation_checks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
   }
 }

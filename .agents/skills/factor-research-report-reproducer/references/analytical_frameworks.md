@@ -22,10 +22,6 @@
 
 ## Stable Layering Standard
 
-Mentor-style success criterion:
-
-> "你自己跑回测跑出稳定的分层就算成功了"
-
 Interpretation: sort stocks by factor value, split into groups, and show stable separation in future returns.
 
 Evidence:

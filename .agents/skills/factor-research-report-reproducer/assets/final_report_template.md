@@ -12,6 +12,17 @@
 
 {{report_formula}}
 
+
+## Mathematical Logic and Code Mapping
+
+See:
+
+```text
+reports/<factor_name>/reproduction_summary.md
+```
+
+This summary explains the report's core formulas, financial interpretation, local-data substitutions, and mapping to implementation code.
+
 ## Local Implementation
 
 {{implemented_formula}}

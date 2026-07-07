@@ -36,6 +36,7 @@ Local data may exist in:
 - Exact reproduction requires local availability of the report's universe, sample period, fields, filters, neutralization, portfolio construction, costs, and rebalance rules.
 - If original report data is unavailable, reproduce factor logic and validate with local data transparently.
 - Do not claim local results exactly match a report unless exact data availability is verified.
+- Do not invent formulas that are not in the report; label inferred or locally approximated math explicitly.
 
 ## Required Outputs
 
@@ -45,10 +46,12 @@ Before implementing/running a reproduction, create:
 
 - `reports/<factor_name>/data_availability_report.md`
 - `reports/<factor_name>/data_mapping.csv`
+- `reports/<factor_name>/reproduction_summary.md`
 
 Final reproduction reports should include:
 
 - implemented formula
+- mathematical logic and code mapping via `reproduction_summary.md`
 - data mapping
 - assumptions
 - backtest command

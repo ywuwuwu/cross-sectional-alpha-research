@@ -58,3 +58,8 @@ factor_mining/
 # Large generated artifacts
 *.log
 *.tmp
+
+# Generated reports and backtest outputs
+reports/**
+!reports/
+!reports/.gitkeep
