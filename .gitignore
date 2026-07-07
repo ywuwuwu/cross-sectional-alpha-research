@@ -62,4 +62,4 @@ factor_mining/
 # Generated reports and backtest outputs
 reports/**
 !reports/
-!reports/.gitkeep
+!reports/.gitkeepdocs/case_studies/strategy_comparison.md
