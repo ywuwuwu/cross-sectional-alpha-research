@@ -1,83 +1,53 @@
-# Case Study: PaperUBL
+# PaperUBL Reconstruction
 
-## Overview
+## Role
 
-`PaperUBL` is the current public sample case study for this repository. It is a local-data reproduction of a paper-style UBL factor implementation, evaluated through the repository's factor construction, portfolio, transaction-cost, IC, group-return, and visualization pipeline.
+PaperUBL is the lead paper-style member of the UBL family. It preserves the
+economic idea of a candle-rejection signal as a common
+reference implementation while keeping source reports, exact private formulas,
+raw data, and security-level values outside the public repository.
 
-This page is intentionally public-safe:
+This is a local-data reconstruction, not an exact replication of an external
+paper's reported performance.
 
-- raw market data is not included
-- source research reports are not redistributed
-- private full `reports/` folders are not published
-- only a curated sample output is included under `examples/sample_outputs/paper_ubl/`
+## Selection Role
 
-The goal is to demonstrate the research engine and reporting workflow, not to claim exact replication of the original report.
+PaperUBL remained the family lead because it was more distinct than several
+standard-window UBL variants and served as the reference implementation during
+family selection. The frozen UBL sleeve assigns it a 60% internal risk budget.
 
-## Public Sample Output
+Its role is defined within the family portfolio; standalone production use was
+not evaluated.
 
-The curated public output is available here:
+## Methodology Corrections
 
-- [sample report](../../examples/sample_outputs/paper_ubl/report.md)
-- [performance overview](../../examples/sample_outputs/paper_ubl/performance_overview.png)
-- [rolling metrics](../../examples/sample_outputs/paper_ubl/rolling_metrics.png)
-- [group cumulative returns](../../examples/sample_outputs/paper_ubl/group_cumulative_returns.png)
-- [group mean returns](../../examples/sample_outputs/paper_ubl/group_mean_returns.png)
-- [group long-short returns](../../examples/sample_outputs/paper_ubl/group_long_short_returns.png)
-- [IC series](../../examples/sample_outputs/paper_ubl/ic_series.png)
-- [IC distribution](../../examples/sample_outputs/paper_ubl/ic_distribution.png)
+An early historical sample mixed correctly lagged top-N portfolio accounting
+with invalid pre-fix IC and daily group diagnostics. Those diagnostic plots were
+withdrawn from the public release.
 
-## Backtest Configuration
+The corrected contract requires:
 
-The public sample was generated with:
+```text
+complete factor inputs at t
+    -> oriented alpha_score at t
+    -> entry at next tradable VWAP
+    -> return measured after entry
+```
 
-| Setting | Value |
-|---|---|
-| Strategy | `PaperUBL` |
-| Period | 2020-01-02 to 2022-01-21 |
-| Rebalance | Month start |
-| Portfolio | Top 50 |
-| Groups | 10 |
-| Transaction cost | Enabled |
-| IC calculation | Enabled |
+PaperUBL is evaluated with the same sign, timing, turnover, and cost definitions
+as every other family member.
 
-## Key Local Results
+## Interpretation
 
-| Metric | Value |
-|---|---:|
-| Total return | 24.52% |
-| Annual return | 12.73% |
-| Sharpe | 0.5321 |
-| Max drawdown | 25.75% |
-| IC mean | 0.0467 |
-| ICIR | 0.5857 |
-| IC win rate | 71.58% |
-| Mean daily group long-short return | 0.51% |
-| Average turnover | 99.39% |
+This study is a local-data reconstruction. It does not establish:
 
-These values are local-data diagnostics. They should be interpreted as evidence that the signal has positive cross-sectional information in this local test, not as a tradable production result.
+- exact paper replication;
+- access to the source report's original universe;
+- identical corporate-action adjustments;
+- live short availability;
+- audited production performance.
 
-## Research Interpretation
-
-The useful part of this case study is the alignment between:
-
-- positive top-portfolio return
-- positive IC
-- positive group long-short return
-- monotonic group mean returns in the sample report
-
-That combination makes `PaperUBL` a good public demonstration of the research workflow. It is still not a finished production alpha because turnover is high, drawdown is material, and robustness across longer samples, alternate universes, and cost assumptions still needs to be tested.
-
-## Next Improvements
-
-The next version should focus on:
-
-- reducing turnover with slower signal decay or holding-period smoothing
-- testing stronger neutralization and risk controls
-- running train/test and walk-forward validation
-- adding transaction-cost sweeps
-- testing correlation against existing alpha families
-- comparing raw UBL, PaperUBL, and modified UBL variants side by side
-
-## Reproduction Notes
-
-This is a local-data reproduction. Exact performance comparison with the original research source would require matching the original universe, sample period, factor formula details, filters, transaction-cost assumptions, and portfolio construction rules.
+Within the selected family, PaperUBL provides the reference signal for
+redundancy and incremental-alpha tests and contributes to the frozen UBL sleeve
+used in the
+[UBL plus LOWVOL case study](ubl_lowvol_portfolio.md).

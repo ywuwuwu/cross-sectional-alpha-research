@@ -6,14 +6,14 @@
 - Reproduction mode: {{exact_or_local}}
 - Strategy file: {{strategy_file}}
 - Backtest command: `{{command}}`
-- Conclusion: {{conclusion}}
+- Current interpretation: {{conclusion}}
 
 ## Report Formula
 
 {{report_formula}}
 
 
-## Mathematical Logic and Code Mapping
+## Formula And Implementation Mapping
 
 See:
 
@@ -21,7 +21,7 @@ See:
 reports/<factor_name>/reproduction_summary.md
 ```
 
-This summary explains the report's core formulas, financial interpretation, local-data substitutions, and mapping to implementation code.
+This summary records the formula, economic interpretation, local-data substitutions, and implementation mapping.
 
 ## Local Implementation
 
@@ -55,7 +55,7 @@ Key local limitations:
 | Costs | {{costs}} |
 | Neutralization | {{neutralization}} |
 
-## Results
+## Observed Results
 
 | Metric | Value |
 |---|---:|
@@ -63,16 +63,16 @@ Key local limitations:
 | Annual return | {{annual_return}} |
 | Sharpe | {{sharpe_ratio}} |
 | Max drawdown | {{max_drawdown}} |
-| IC mean | {{ic_mean}} |
-| IC std | {{ic_std}} |
-| IR | {{ir}} |
+| Pearson IC mean | {{ic_mean}} |
+| RankIC mean | {{rankic_mean}} |
+| RankICIR | {{rankic_ir}} |
 | IC win rate | {{ic_win_rate}} |
 
-## Layering Evidence
+## Group Return Diagnostics
 
-Stable layering: {{stable_layering_yes_no}}
+Group ordering: {{stable_layering_yes_no}}
 
-Required artifacts:
+Figures:
 
 - `group_cumulative_returns.png`
 - `group_mean_returns.png`
@@ -86,6 +86,6 @@ Interpretation:
 
 {{differences}}
 
-## Next Steps
+## Open Questions And Next Test
 
 {{next_steps}}

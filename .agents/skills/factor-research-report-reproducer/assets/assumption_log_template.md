@@ -1,14 +1,14 @@
 # Assumption Log: {{factor_name}}
 
-| ID | Layer | Assumption | Why Needed | Risk | Validation |
+| ID | Layer | Assumption | Purpose | Risk | Validation |
 |---|---|---|---|---|---|
-| A1 | Data | {{assumption}} | {{why}} | {{risk}} | {{validation}} |
-| A2 | Formula | {{assumption}} | {{why}} | {{risk}} | {{validation}} |
-| A3 | Signal | {{assumption}} | {{why}} | {{risk}} | {{validation}} |
-| A4 | Portfolio | {{assumption}} | {{why}} | {{risk}} | {{validation}} |
-| A5 | Performance | {{assumption}} | {{why}} | {{risk}} | {{validation}} |
+| A1 | Data | {{assumption}} | {{purpose}} | {{risk}} | {{validation}} |
+| A2 | Formula | {{assumption}} | {{purpose}} | {{risk}} | {{validation}} |
+| A3 | Signal | {{assumption}} | {{purpose}} | {{risk}} | {{validation}} |
+| A4 | Portfolio | {{assumption}} | {{purpose}} | {{risk}} | {{validation}} |
+| A5 | Performance | {{assumption}} | {{purpose}} | {{risk}} | {{validation}} |
 
-## Required Notes
+## Documentation Fields
 
 - State whether this is exact reproduction or local-data reproduction.
 - Record every field substitution.

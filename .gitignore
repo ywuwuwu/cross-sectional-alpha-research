@@ -12,6 +12,7 @@ env/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+*.egg-info/
 .ipynb_checkpoints/
 
 # OS / IDE
@@ -19,7 +20,10 @@ env/
 .vscode/
 .idea/
 
-# Private data
+# Generated local output
+outputs/
+
+# Private data and binary research inputs
 data/
 data_5m/
 data.pkl
@@ -30,36 +34,59 @@ date.pkl
 *.feather
 *.h5
 *.hdf5
-
-# Compressed private data
 *.zip
 *.tar
 *.tar.gz
 *.7z
 *.rar
-
-# Research reports / copyrighted PDFs
 *.pdf
 
-# Local config
-config/data_paths.yaml
+# Local/private research implementation
+factor_mining/
+run_research_backtest.py
+visualizer.py
+research_inputs/
+research_registry/
+config/*
+!config/.gitkeep
 
-# Generated reports and backtest outputs
-reports/*.csv
-reports/**/**/*.csv
-reports/**/**/**/*.csv
+# Full local report archive
+reports/**
+!reports/
 !reports/.gitkeep
 
-factor_mining/
-# Working notebooks with private outputs
-*.ipynb
-!notebooks/demo_synthetic.ipynb
+# Internal experiment scripts remain local
+scripts/*
 
-# Large generated artifacts
+# Only formula-agnostic public examples are tracked
+examples/*.py
+!examples/run_sample_package.py
+!examples/render_public_results.py
+
+# Only the focused public package tests are tracked
+tests/*.py
+!tests/test_sample_package.py
+
+# Historical sample retained locally but withdrawn from the public release
+examples/sample_outputs/paper_ubl/
+
+# Internal research documentation retained locally
+docs/deprecated_results.md
+docs/methodology_contract.md
+docs/*turnover_contract.md
+docs/result_snapshot_contract.md
+docs/ubl_family_direction_registry.md
+docs/case_studies/strategy_comparison.md
+docs/case_studies/VolumeMomentumStrategy.md
+
+# Working notebooks and temporary files
+*.ipynb
 *.log
 *.tmp
 
-# Generated reports and backtest outputs
-reports/**
-!reports/
-!reports/.gitkeepdocs/case_studies/strategy_comparison.md
+# Empty-directory placeholders are not part of the public release
+*.gitkeep
+
+# Narrow public exception: aggregate portfolio evidence only
+!examples/sample_outputs/ubl_lowvol_study/data/
+!examples/sample_outputs/ubl_lowvol_study/data/**

@@ -26,21 +26,21 @@ If any of these are missing or uncertain, do not claim exact reproduction.
 
 Default mode. Reproduce the formula and research logic, then validate it with local data.
 
-Required wording:
+Suggested status note:
 
 > When the original report dataset is unavailable, the objective is not exact return replication; the objective is transparent factor-logic implementation and local-data validation.
 
-## Safe Data Inspection
+## Data Inspection
 
 Do:
 
 - inspect code first
 - list folders/files
 - read small CSV samples with `nrows`
-- use `DataLoader` where possible
+- use an existing loader or a bounded sample reader where possible
 - report detected date ranges and columns
 
-Avoid:
+Use caution with:
 
 - fully loading large folders
 - unpacking `.zip` files unless necessary
@@ -78,7 +78,7 @@ Before implementation/backtest create:
 - availability status
 - assumption/risk
 
-## Result Claims
+## Result Labels
 
 Use cautious labels:
 

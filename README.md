@@ -1,263 +1,334 @@
-# Quant Factor Report Reproducer
+# Cost-Aware Cross-Sectional Alpha Research
 
-A research automation project for reproducing quant factor research reports using local data, reusable factor code, backtesting, visualization, and audit documentation.
+A research repository combining two public surfaces:
 
-This project was designed to turn unstructured factor research reports into reproducible local research workflows. It extracts factor intuition, formulas, data requirements, portfolio-construction assumptions, and performance metrics, then maps them to an existing Python factor-research framework.
+1. a documented UBL plus low-volatility portfolio study with aggregate evidence;
+2. a small, formula-agnostic Python package demonstrating point-in-time
+   validation, portfolio accounting, evaluation, and report generation.
 
-The project is a quant research engineering workflow for factor implementation, local-data validation, and reproducible backtesting.
+The package starts from precomputed, oriented `alpha_score` values. It does
+not contain the private UBL formulas, strategy factories, security-level
+research data, or the local production-style backtest engine.
 
----
+> Results are simulated and unaudited. They are not investment advice or live
+> trading performance.
 
-## Motivation
+![Net NAV comparison](examples/sample_outputs/ubl_lowvol_study/plots/01_net_nav_comparison.png)
 
-Professional factor research reports often contain valuable ideas, but reproducing them is time-consuming because the analyst must manually identify:
+## Small Sample Package
 
-- factor intuition
-- factor formula
-- required data fields
-- universe and sample-period assumptions
-- signal construction
-- ranking and grouping logic
-- neutralization or risk adjustment
-- portfolio construction
-- transaction costs
-- benchmark assumptions
-- performance metrics
+The code under `src/alpha_research/` is intentionally small. Its purpose
+is to make the research mechanics inspectable without publishing the strategies.
 
-In practice, the original report dataset is often unavailable or proprietary. This project therefore separates **formula-level reproduction** from **performance-level reproduction**.
+| Module | Public responsibility |
+|---|---|
+| `runner.py` | Validate timestamps, form score tails, calculate IC/RankIC, and build a weight ledger |
+| `portfolio.py` | Dollar-neutral normalization, sleeve combination, turnover, costs, and PnL |
+| `metrics.py` | Sharpe, drawdown, summaries, and paired moving-block bootstrap |
+| `visualization.py` | NAV, drawdown, turnover, RankIC, comparison plots, and Markdown reports |
 
-When the original report dataset is unavailable, the objective is not exact return replication; the objective is transparent factor-logic implementation and local-data validation.
-
----
-
-## Core Contribution
-
-This project contributes:
-
-1. A reusable Codex skill for factor research report reproduction.
-2. A Python factor-research framework for strategy implementation and local backtesting.
-3. A local-data reproduction protocol for cases where the original research-report data is unavailable.
-4. A structured audit trail including data mapping, assumption logs, validation reports, and final reproduction reports.
-5. A public-safe project structure that excludes proprietary data and copyrighted source reports.
-
----
-
-## System Workflow
+The runner always interprets a higher `alpha_score` as a higher expected
+return. It requires:
 
 ```text
-Research Report
-      ↓
-Factor Intuition Extraction
-      ↓
-Formula and Assumption Mapping
-      ↓
-Local Data Availability Check
-      ↓
-Data Requirement Mapping
-      ↓
-Factor Strategy Implementation
-      ↓
-Signal Generation
-      ↓
-Portfolio Construction
-      ↓
-Backtest Execution
-      ↓
-Visualization
-      ↓
-Validation and Final Report
+latest_factor_input_timestamp < entry_timestamp < exit_timestamp
 ```
 
-## Implemented Strategy Reproductions
+It then records:
 
-This repository includes several local-data reproductions of factor research ideas. The original source reports are not redistributed. Each strategy is implemented as a public-safe local reproduction using the available data pipeline and backtesting framework.
+- previous, target, and executed security weights;
+- weight changes and full/one-way turnover;
+- gross PnL, security-level cost, and net PnL contributions;
+- Pearson IC and Spearman RankIC;
+- exposure, Sharpe, drawdown, and break-even cost.
 
+Factor construction, universe selection, private data loading, strategy
+parameters, borrow modeling, and live execution are outside this sample package.
 
-| Strategy                      | Source Idea                                      | Implementation File                                                                                                 | Reproduction Status             | Main Purpose                                                                                                                   |
-| ----------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| UTR Strategy                  | Volume-stability / turnover-rate factor research | `factor_mining/utr_strategy.py`                                                                                     | Local-data reproduction         | Reproduces a turnover-based signal and evaluates its cross-sectional predictive power                                          |
-| UBL Strategy                  | Volume-stability turnover factor variant         | `factor_mining/ubl_strategy.py`                                                                                     | Local-data reproduction         | Tests a report-derived extension of UBL factor using the local daily data and portfolio framework                              |
-| Paper UBL Strategy            | Paper-style UBL implementation                   | `factor_mining/PaperUBL_Strategy.py`                                                                                | Local-data reproduction         | Keeps a closer implementation of the report formula for comparison against the adapted local version                           |
-| CPV Strategy                  | CPV price-volume autocorrelation factor research | `factor_mining/cpv_strategy.py`                                                                                     | Local-data reproduction         | Reproduces a price-volume correlation factor and evaluates its group returns, IC, RankIC, and long-short behavior              |
-| CTR Strategy                  | Turnover-sliced CTR factor research              | `factor_mining/ctr_strategy.py`                                                                                     | Local-data reproduction         | Tests whether turnover segmentation improves or changes the behavior of a CTR-style factor                                     |
-| Volume Momentum Strategy      | Volume-corrected momentum strategy               | `factor_mining/volume_momentum_strategy.py`                                                                         | Partial local-data reproduction | Implements the `mom_1430_smart` logic using daily turnover and 5-minute intraday proxies instead of the original 1-minute data |
-| Factor Segmentation Framework | Factor slicing and decomposition methodology     | `factor_mining/signal_generator.py`, `factor_mining/portfolio_manager.py`, `factor_mining/performance_evaluator.py` | Framework reproduction          | Provides reusable grouping, ranking, portfolio construction, and evaluation utilities for factor reproduction                  |
+## Installation And Tests
 
+Python 3.10 or newer is recommended.
 
-These strategies should be interpreted as **local-data validations**, not exact replications of the original reports. Exact performance comparison is only valid when universe, sample period, data frequency, filters, transaction costs, and portfolio construction rules match the original report.
-
-## Public Case Studies
-
-The repository publishes curated examples instead of the full raw `reports/` directory.
-
-| Item | Location | Purpose |
-|---|---|---|
-| PaperUBL sample report | `examples/sample_outputs/paper_ubl/report.md` | Public sample output with metrics and figures |
-| PaperUBL case study | `docs/case_studies/PaperUBL.md` | Current public flagship reproduction example |
-| UBL improvement track | `docs/case_studies/UBL.md` | Documents the next stronger UBL research direction without overclaiming unfinished results |
-| Strategy comparison | `docs/case_studies/strategy_comparison.md` | Explains which strategy results are publishable now and which remain experimental |
-| Report references | `docs/report_references.md` | Documents public references and internal report handling policy |
-
-The current public sample focuses on `PaperUBL`. A stronger modified `UBL` strategy is planned as a later flagship case study after additional validation, drawdown reduction, transaction-cost testing, and walk-forward checks.
-
-## Reproduction Modes
-
-The project supports four reproduction statuses.
-
-
-| Status                           | Meaning                                                                                                   |
-| -------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Exact reproduction               | Local data and assumptions match the report closely enough for direct performance comparison.             |
-| Local-data reproduction          | The factor logic is implemented and tested on available local data, but exact report data is unavailable. |
-| Partial local-data reproduction  | Some factor components are implemented, but required data or assumptions are incomplete.                  |
-| Implementation-only reproduction | The factor logic is mapped to code or pseudocode, but a valid backtest cannot be run.                     |
-
-
-## Repository Structure
-
+```bash
+cd quant-factor-report-reproducer
+python -m venv .venv
+source .venv/bin/activate
+pip install -e ".[dev]"
+python -m pytest -q tests/test_sample_package.py
 ```
+
+Run the anonymous synthetic example:
+
+```bash
+python examples/run_sample_package.py
+```
+
+It writes a synthetic input panel, daily results, a security-level weight
+ledger, summary JSON, four plots, and `report.md` under
+`outputs/sample_package/`. The generated performance is a mechanics
+check, not an empirical claim.
+
+Regenerate the six committed portfolio figures:
+
+```bash
+python examples/render_public_results.py
+```
+
+## Input Schema
+
+The generic runner expects one row per factor date and asset:
+
+| Column | Meaning |
+|---|---|
+| `factor_date` | Date associated with the score |
+| `latest_factor_input_timestamp` | Latest information used by the score |
+| `entry_timestamp` | Simulated execution timestamp |
+| `exit_timestamp` | Return-measurement endpoint |
+| `asset` | Anonymous or public asset identifier |
+| `alpha_score` | Oriented score; higher means better |
+| `forward_return` | Realized return strictly after entry |
+
+## API Example
+
+```python
+import pandas as pd
+
+from alpha_research import (
+    BacktestConfig,
+    Visualizer,
+    run_cross_sectional_backtest,
+)
+
+panel = pd.read_csv(
+    "oriented_scores_and_returns.csv",
+    parse_dates=[
+        "factor_date",
+        "latest_factor_input_timestamp",
+        "entry_timestamp",
+        "exit_timestamp",
+    ],
+)
+
+result = run_cross_sectional_backtest(
+    panel,
+    BacktestConfig(
+        long_fraction=0.20,
+        short_fraction=0.20,
+        cost_bps=10.0,
+        band_bps=5.0,
+    ),
+)
+
+Visualizer(result).save_report("outputs/example_report")
+```
+
+## Research-Holdout Comparison
+
+On a 133-observation chronological research holdout, the frozen 80% UBL / 20%
+LOWVOL_60 portfolio had net Sharpe 1.36 after a 10 bps per dollar traded cost
+model, versus 0.60 for UBL alone. Net max drawdown declined from 4.82% to 4.05%,
+average full turnover declined from 0.532 to 0.462, and break-even cost increased
+from 13.12 to 17.93 bps.
+
+Across four frozen paired block-bootstrap schemes, the blend had higher Sharpe
+than UBL in 95.2% of resamples from the observed holdout.
+
+| Metric | UBL only | UBL + LOWVOL |
+|---|---:|---:|
+| Research-holdout net Sharpe | 0.60 | 1.36 |
+| Research-holdout net return | 2.10% | 4.87% |
+| Research-holdout net max drawdown | 4.82% | 4.05% |
+| Average full turnover | 0.532 | 0.462 |
+| Break-even cost | 13.12 bps | 17.93 bps |
+| Paired bootstrap P(Sharpe improvement) | - | 95.2% |
+
+All returns are model results. Sharpe is annualized with a zero cash hurdle.
+Turnover is full turnover, `sum(abs(w_t - w_t-1))`, for a book
+normalized to long gross +1 and short gross -1.
+
+## Robustness Results
+
+The holdout comparison favors the blend, while results remain uneven across
+time.
+
+| Robustness check | Result |
+|---|---:|
+| Validation net Sharpe | 1.69 |
+| Full-common-sample net Sharpe | 1.64 |
+| Full-common-sample net Sharpe at 15 bps | 0.71 |
+| Paired walk-forward Sharpe | -0.07 |
+| Positive walk-forward folds | 2 / 4 |
+| One-additional-day execution-delay Sharpe | 0.46 |
+
+The paired walk-forward aggregate remains slightly negative and only two of four
+folds are positive. The additional execution day materially weakens the result.
+These observations limit the current interpretation and motivate a new-data
+test.
+
+![Paired walk-forward folds](examples/sample_outputs/ubl_lowvol_study/plots/05_walk_forward_fold_returns.png)
+
+## Frozen Portfolio Specification
+
+**UBL family sleeve**
+
+| Component | Internal risk budget |
+|---|---:|
+| PaperUBL 3D | 60% |
+| UBL_M20 3D | 20% |
+| UBL_M5 5D | 20% |
+
+The UBL family first applies its frozen 7.5 bps security-weight-change band and
+is then treated as one top-level sleeve.
+
+**Top-level blend**
+
+| Sleeve | Risk budget |
+|---|---:|
+| UBL family | 80% |
+| LOWVOL_60 | 20% |
+
+Each sleeve is divided by training-only realized portfolio volatility. Security
+weights are combined, normalized to long +1 / short -1, passed through a common
+7.5 bps no-trade band, and charged costs on final aggregate trades. Standalone
+net-return series are not averaged.
+
+## Research Contract
+
+- **Signal timing:** complete data at date `t` is used only for a
+  portfolio entered at the next tradable VWAP.
+- **Direction:** every factor emits an oriented `alpha_score`.
+- **Portfolio:** market-neutral long/short, net exposure 0, gross exposure 2.
+- **Costs:** base 10 bps per dollar traded, applied to full turnover; 5/10/15/20
+  bps sensitivity is reported.
+- **Splits:** train 2020, validation first half of 2021, research holdout second
+  half of 2021 through January 2022.
+- **Selection:** budgets, LOWVOL_60 window, UBL family composition, and no-trade
+  rule were fixed before the combined-portfolio comparison.
+- **Statistics:** paired same-date resampling, fixed-rule walk-forward folds,
+  cost stress, PnL concentration, delay sensitivity, and exposure checks.
+
+See [methodology.md](docs/methodology.md) for definitions and the
+[point-in-time timing contract](docs/methodology.md#point-in-time-timing).
+
+## Selected Figures
+
+### Transaction-Cost Frontier
+
+![Transaction-cost frontier](examples/sample_outputs/ubl_lowvol_study/plots/03_transaction_cost_frontier.png)
+
+The blend remains positive at 15 bps on the full common sample, while both
+portfolios are negative at 20 bps.
+
+### Paired Holdout Bootstrap
+
+![Paired bootstrap Sharpe difference](examples/sample_outputs/ubl_lowvol_study/plots/04_paired_bootstrap_sharpe_difference.png)
+
+The plot shows the 5-day moving-block specification with 5,000 resamples. The
+reported 95.2% is the mean frequency across four frozen block schemes. It is an
+observed-sample resampling frequency, not a probability of future profitability.
+
+The full figure set and data dictionary are in the
+[portfolio output bundle](examples/sample_outputs/ubl_lowvol_study/README.md).
+
+## Repository Map
+
+```text
 .
-├── .agents/skills/factor-research-report-reproducer/
-│   ├── SKILL.md
-│   ├── assets/
-│   └── references/
-├── factor_mining/
-│   ├── data_loader.py
-│   ├── factor_calculator.py
-│   ├── signal_generator.py
-│   ├── portfolio_manager.py
-│   ├── performance_evaluator.py
-│   ├── strategy_base.py
-│   ├── cpv_strategy.py
-│   ├── ctr_strategy.py
-│   ├── ideal_reversal_strategy.py
-│   ├── PaperUBL_Strategy.py
-│   ├── ubl_strategy.py
-│   ├── utr_strategy.py
-│   └── volume_momentum_strategy.py
-├── run_research_backtest.py
-├── visualizer.py
-├── config/
-├── docs/
-├── examples/
-├── reports/
-└── tests/
+|-- src/alpha_research/
+|   |-- __init__.py
+|   |-- metrics.py
+|   |-- portfolio.py
+|   |-- runner.py
+|   `-- visualization.py
+|-- examples/
+|   |-- run_sample_package.py
+|   |-- render_public_results.py
+|   `-- sample_outputs/ubl_lowvol_study/
+|       |-- data/
+|       `-- plots/
+|-- tests/test_sample_package.py
+|-- docs/
+|   |-- methodology.md
+|   |-- candidate_outcomes.md
+|   |-- public_release_scope.md
+|   |-- report_references.md
+|   `-- case_studies/
+|       |-- UBL.md
+|       |-- PaperUBL.md
+|       `-- ubl_lowvol_portfolio.md
+|-- .agents/skills/factor-research-report-reproducer/
+|-- pyproject.toml
+`-- LICENSE
 ```
 
-## Main Components
+## Reviewing The Research
 
-factor_mining/
+A suggested review order is:
 
-Contains the core factor-research modules:
+1. Read the [methodology contract](docs/methodology.md).
+2. Run the synthetic sample and inspect its weight ledger.
+3. Review the [UBL family study](docs/case_studies/UBL.md) and
+   [PaperUBL reconstruction](docs/case_studies/PaperUBL.md).
+4. Compare UBL and UBL + LOWVOL in the
+   [combined-portfolio study](docs/case_studies/ubl_lowvol_portfolio.md).
+5. Inspect the committed CSV files and
+   [evidence manifest](examples/sample_outputs/ubl_lowvol_study/data/evidence_manifest.json).
+6. Review [candidate outcomes](docs/candidate_outcomes.md) and the remaining
+   limitations.
 
-- data loading  
-- factor calculation  
-- signal generation  
-- portfolio construction  
-- strategy definitions  
-- performance evaluation
+The sample package demonstrates mechanics. It cannot reproduce the private
+security-level backtest from the aggregate evidence.
 
-`run_research_backtest.py`
+## Research Sequence
 
-Canonical entry point for running local factor backtests where supported.
+- Reconstruct the paper-style UBL reference.
+- Audit direction and point-in-time timing.
+- Compare holding horizons and rebalance offsets.
+- Test family redundancy and incremental return information.
+- Attribute turnover and freeze a no-trade rule.
+- Evaluate economic exposures, capacity, and weak regimes.
+- Evaluate and close the medium-term momentum candidates.
+- Qualify LOWVOL_60 as a defensive sleeve.
+- Compare the frozen UBL portfolio with the UBL + LOWVOL portfolio.
 
-`visualizer.py`
+## Limitations And Open Questions
 
-Visualization utilities for plotting strategy results.
+- The research holdout has been viewed and is now confirmation-only.
+- The 133-observation holdout is short and regime-specific.
+- Paired walk-forward performance is negative with only 2/4 positive folds.
+- LOWVOL_60 varies substantially by period: validation Sharpe is near zero while
+  holdout Sharpe is higher.
+- An additional day of execution delay cuts the selected full-sample Sharpe to
+  0.46.
+- Borrow availability, financing, market impact, and short-sale constraints are
+  not modeled.
+- Adjusted-price provenance and pre-2020 LOWVOL_60 warm-up data were not
+  independently verified.
+- The source snapshot was captured from a research worktree with uncommitted
+  local changes.
+- The public sample package is not the private strategy engine and does not
+  reproduce the published aggregate returns by itself.
 
-`.agents/skills/factor-research-report-reproducer/SKILL.md`
+The next planned research test is unchanged-rule replication on genuinely new,
+adjustment-verified data with borrow and execution evidence.
 
-Codex skill that guides the reproduction workflow. It instructs Codex to:
+## Candidate Outcomes
 
-- read a factor research report  
-- extract factor intuition and formula  
-- inspect local data availability  
-- map report data requirements to local data  
-- reuse the existing factor framework  
-- run the existing backtest pipeline where possible  
-- generate plots and validation reports  
-- clearly distinguish exact reproduction from local-data reproduction
+Two conventional medium-term momentum definitions were frozen with a positive
+direction and were not selected. Both had negative validation RankIC and
+negative gross and net returns. Their predefined sign was retained throughout
+evaluation. Details are in
+[candidate_outcomes.md](docs/candidate_outcomes.md).
 
-## Local Data Policy
+## Optional Report-Reproduction Skill
 
-This public repository does not include raw market data or source research reports.
+The repository retains
+[the factor research report reproducer](.agents/skills/factor-research-report-reproducer/SKILL.md)
+as an optional methodology and documentation tool. It does not expose the
+private research engine.
 
-The original private/local project may use data sources such as:
+## License
 
-```
-data/data_daily/
-data/data_ret/
-data/data_industry/
-data/data_barra/
-data/data_ud_new/
-data_5m/
-data.pkl
-date.pkl
-```
-
-These files are intentionally excluded from GitHub.
-
-To run the project locally, copy:
-`config/data_paths.example.yaml`
-to:
-`config/data_paths.yaml`
-and update the paths to point to your private local data.
-
-## Expected Outputs
-
-Each reproduction run should produce a dedicated folder under:
-
-`reports/<factor_name>/`
-
-Expected files include:
-
-```
-data_availability_report.md
-data_mapping.csv
-assumption_log.md
-implementation_plan.md
-validation_report.md
-final_reproduction_report.md
-figures/
-metrics.csv
-backtest_results.csv
-```
-
-Generated `reports/` outputs are ignored by default to avoid publishing private data-derived results.
-
-For GitHub, publish only cleaned sample outputs such as:
-
-```
-examples/sample_outputs/paper_ubl/
-docs/case_studies/
-docs/report_references.md
-```
-
-Do not publish raw full `reports/` folders until smoke tests, failed experiments, private paths, and experimental strategy labels have been reviewed.
-
-## Using the Codex Skill
-
-From the project root, start Codex and call the skill explicitly:
-
-```
-Use $factor-research-report-reproducer to reproduce the CPV factor from my local research report.
-
-First inspect the report and repository. Then create the data mapping, assumption log, and implementation plan under reports/cpv_reproduction/. Do not modify code or run the backtest until I approve the plan.
-```
-
-A full workflow prompt may look like:
-
-```
-Use $factor-research-report-reproducer to reproduce a factor research report.
-
-Please:
-1. Extract the factor intuition, formula, universe, sample period, rebalance rule, grouping method, benchmark, and reported metrics.
-2. Inspect factor_mining/data_loader.py and map the report data requirements to local datasets.
-3. Reuse factor_mining modules where possible.
-4. Use run_research_backtest.py for the backtest if possible.
-5. Use visualizer.py for plots if possible.
-6. Save outputs under reports/<factor_name>/.
-7. Clearly label the reproduction status.
-8. Do not claim exact performance replication unless local data and report data match.
-```
-
+Code, documentation, and released artifacts are covered by the
+[MIT License](LICENSE). Published metrics are research artifacts and carry no
+warranty of investment performance.

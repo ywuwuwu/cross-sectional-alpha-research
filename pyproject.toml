@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cross-sectional-alpha-research"
+version = "0.2.0"
+description = "A small formula-agnostic sample package for point-in-time cross-sectional alpha research."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+authors = [{name = "Yashuo"}]
+dependencies = [
+  "numpy>=1.23",
+  "pandas>=1.5",
+]
+
+[project.optional-dependencies]
+plots = ["matplotlib>=3.6"]
+dev = ["matplotlib>=3.6", "pytest>=7"]
+
+[project.urls]
+Repository = "https://github.com/ywuwuwu/quant-factor-report-reproducer"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"

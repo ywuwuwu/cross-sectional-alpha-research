@@ -1,76 +1,90 @@
-# Case Study: UBL Improvement Track
+# UBL Family Research Track
 
-## Overview
+## Purpose
 
-`UBL` is an active improvement track rather than the current public flagship result. The repository includes a local UBL implementation, but the stronger UBL version will be published later after additional validation and refinement.
+UBL is treated as a family of short-horizon candle-rejection signals rather
+than one formula and one backtest. The research objective is to determine
+whether related UBL definitions contain stable cross-sectional information that
+can be converted into a cost-aware portfolio.
 
-For now, this page documents how UBL should be evaluated and improved without promoting an unfinished result.
+Exact private formulas and security-level factor values are not published. The
+public record focuses on timing, direction, candidate selection, portfolio
+construction, and economic validation.
 
-## Current Public Position
+## Research Sequence
 
-| Item | Status |
-|---|---|
-| Strategy family | Volume-stability / price-shape alpha |
-| Repository status | Implemented locally |
-| Public report status | Withheld for now |
-| Public claim | Work in progress |
-| Current role | Candidate for further research and modification |
+1. Reconstruct a paper-style UBL reference.
+2. Define one oriented `alpha_score` convention.
+3. Correct IC and group diagnostics to use next-period returns.
+4. Sweep a small preregistered set of horizons and rebalance offsets.
+5. Decompose long and short legs.
+6. Prune redundant family members using score, IC, return, holding, and drawdown
+   correlations.
+7. Test incremental alpha relative to PaperUBL.
+8. Combine selected security weights before costs.
+9. Diagnose turnover and freeze one no-trade policy.
+10. Add only a preregistered diversifier that improves portfolio economics.
 
-## Why UBL Is Still Interesting
+## Direction And Timing
 
-UBL remains worth improving because early diagnostics suggest that the factor family can contain meaningful cross-sectional information. The current task is to convert that signal information into a more stable and tradable portfolio result.
-
-In practical alpha research, this is a common gap:
+All active UBL variants emit:
 
 ```text
-strong IC behavior
-      does not automatically imply
-strong net portfolio performance
+raw_factor_value
+alpha_score
 ```
 
-The missing link is usually portfolio construction, signal direction, neutralization, turnover control, risk exposure, transaction cost, or regime sensitivity.
+Higher `alpha_score` always means higher expected return. Portfolio code never
+inverts a signal. For the selected family, lower raw UBL pressure is oriented
+to a higher alpha score.
 
-## Validation Checklist
+Complete date-`t` OHLCV inputs are observed after the close. The resulting
+portfolio is entered at the next tradable VWAP and evaluated against a later
+exit benchmark. The old same-file daily IC/group diagnostics were withdrawn and
+are not part of the public evidence.
 
-Before publishing a stronger UBL case study, validate:
+## Selected Family
 
-| Check | Purpose |
-|---|---|
-| Factor direction | Confirm whether high or low raw factor values should be bought |
-| Point-in-time alignment | Ensure the signal uses only information available before trade time |
-| Coverage | Verify enough stocks are available on each rebalance date |
-| IC and RankIC | Measure cross-sectional predictive power |
-| ICIR stability | Check whether IC is persistent, not one-regime luck |
-| Group monotonicity | Confirm sorted groups behave consistently |
-| Long-short return | Test economic spread between top and bottom groups |
-| Top-N portfolio | Check whether the alpha survives actual portfolio construction |
-| Turnover | Estimate how costly the strategy is to trade |
-| Transaction-cost sweep | Test whether results survive realistic costs |
-| Neutralization | Control industry, size, beta, and liquidity exposures |
-| Train/test split | Avoid tuning entirely on the evaluation period |
-| Correlation pruning | Avoid publishing a redundant version of an existing alpha |
+The frozen top-level UBL sleeve contains:
 
-## Improvement Directions
+| Component | Role | Internal risk budget |
+|---|---|---:|
+| PaperUBL 3D | Lead implementation | 60% |
+| UBL_M20 3D | Slower challenger | 20% |
+| UBL_M5 5D | Specialist | 20% |
 
-Good next experiments include:
+Related M10 and other windows remain in the private evidence library as
+redundant, diagnostic, or watchlist candidates. They were not deleted.
 
-- smoothed UBL ranks to reduce rebalance turnover
-- industry-size neutralized UBL
-- UBL combined with liquidity and volatility filters
-- UBL direction testing across market regimes
-- rolling ICIR selection between raw UBL and PaperUBL variants
-- ensemble scoring with low-correlation reversal or liquidity signals
-- risk-controlled long-short construction instead of pure top-N selection
+## Family-Level Rationale
 
-## Publication Standard
+Closely related horizons can share information while differing in implementation
+noise and turnover. The family process asks two separate questions:
 
-Publish a full UBL case study only after it has:
+- Does a candidate rank returns on its own?
+- Does it retain incremental residual information after the lead candidate?
 
-- positive out-of-sample IC or RankIC
-- sensible group monotonicity
-- positive net long-short performance after cost
-- acceptable drawdown
-- documented training and testing periods
-- clearly described limitations
+Candidates with very high score and return correlation are not automatically
+mixed. Redundant candidates are retained for audit but removed from active
+complexity.
 
-This protects the project from overclaiming while keeping UBL visible as a high-potential research direction.
+## Portfolio Implementation
+
+The selected family:
+
+- combines security-level sleeve weights;
+- scales sleeves with training-only volatility;
+- normalizes to long +1 and short -1;
+- applies a frozen 7.5 bps security-weight-change band;
+- calculates transaction costs after aggregate trade netting.
+
+This implementation replaced top-N long-only return as the primary evidence.
+Dollar-neutral long/short results, cost tolerance, and timing robustness are the
+main tests.
+
+## Portfolio Role
+
+UBL remains the principal signal sleeve. The public analysis emphasizes timing,
+candidate selection, and implementation rather than a standalone Sharpe target.
+The selected multi-factor result is documented in
+[the combined-portfolio case study](ubl_lowvol_portfolio.md).

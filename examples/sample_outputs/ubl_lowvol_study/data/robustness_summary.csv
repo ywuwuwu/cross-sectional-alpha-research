@@ -1,0 +1,7 @@
+check,value,sample
+validation_net_sharpe,1.69201944078,validation
+full_common_net_sharpe,1.64422811323,all common dates
+net_sharpe_at_15bps,0.706377842615,all common dates
+paired_walk_forward_sharpe,-0.0678544150537,4 paired folds
+positive_walk_forward_folds,2,out of 4
+one_day_delay_sharpe,0.457072059568,all common delayed dates

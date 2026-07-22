@@ -20,11 +20,11 @@
 5. Local-data validation
    - Explain data limitations and why local results may differ.
 
-## Stable Layering Standard
+## Group Return Diagnostics
 
 Interpretation: sort stocks by factor value, split into groups, and show stable separation in future returns.
 
-Evidence:
+Review:
 
 - group cumulative return curves separate
 - group mean returns are monotonic or directionally ordered
@@ -41,7 +41,7 @@ For every factor, record:
 - Does the report sort low-to-high or high-to-low?
 - Which group is expected to outperform?
 - Does local IC sign match that direction?
-- Does `generate_signal` use the correct ascending flag?
+- Does the oriented `alpha_score` match the predefined direction?
 - Is long-short defined high-minus-low or low-minus-high?
 
 ## Common Factor Operations

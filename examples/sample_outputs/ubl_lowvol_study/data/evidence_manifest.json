@@ -1,0 +1,24 @@
+{
+  "source_snapshot_id": "20260720_ubl_lowvol_portfolio_v1",
+  "contract_version": "ubl_lowvol_portfolio_v1",
+  "source_commit_record": "commit=99a40aec375d001d2ae50579ca8246155128f67f",
+  "source_worktree_was_dirty": true,
+  "public_scope": "aggregate portfolio evidence only",
+  "excluded": [
+    "raw market data",
+    "security identifiers and weights",
+    "factor values and private UBL formulas",
+    "local filesystem paths",
+    "private strategy implementation and research engine"
+  ],
+  "files": {
+    "headline_metrics.csv": "908e0eeaff2674550ffa993d66528796b5702c6ec223764d319740c183e9006b",
+    "portfolio_returns.csv": "9c074d9a11e88a64128216dcd9538489eb301b4384e34d71cf64015e79b16bea",
+    "cost_sensitivity.csv": "e30a596e69bc640760eff279c1c785768ee73fb1db23b45172b9f6b8d23bf039",
+    "walk_forward_folds.csv": "4fe2ee189468bf06514846adb5b92438fe1d2ea4009b960309b73c7c2d571ac6",
+    "bootstrap_method_summary.csv": "5daf790296dfbada15c6af9d4c202cd9892c12c632f244ca5f68ee52f75136d9",
+    "bootstrap_sharpe_differences.csv": "1ff889d035389cb4bf74ad382f993ed8b7a0db71868cbbf982ee51a203b6f77b",
+    "pnl_concentration.csv": "6d22288cb703b7f0e44d0e0fb7edfe4b898519cc5c25cbb113b501c65bf7c27e",
+    "robustness_summary.csv": "bdb296472782a891498c32da64f6efdd60dc7511b493785159b8981d9101a10d"
+  }
+}

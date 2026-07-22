@@ -8,7 +8,7 @@
 - Output directory:
 - Exact reproduction / local-data reproduction / partial reproduction / implementation-only reproduction:
 
-## 2. Research Report Thesis
+## 2. Research Question And Economic Rationale
 
 Briefly summarize the report's factor intuition and why the factor may predict returns.
 
@@ -33,7 +33,7 @@ If the exact formula is unavailable, label the formula as inferred or locally ap
 | 2 |  |  |  |
 | 3 |  |  |  |
 
-## 4. Financial Meaning of the Math
+## 4. Economic Interpretation
 
 Explain what each mathematical component is trying to capture financially.
 
@@ -52,12 +52,12 @@ Examples:
 
 | Mathematical Component | Report Logic | Local Implementation | Code Location | Notes |
 |---|---|---|---|---|
-| Factor raw input |  |  | `factor_mining/...` |  |
-| Rolling window |  |  | `factor_mining/...` |  |
-| Standardization |  |  | `factor_mining/...` |  |
-| Signal ranking |  |  | `factor_mining/...` |  |
-| Portfolio construction |  |  | `factor_mining/...` |  |
-| Performance evaluation |  |  | `factor_mining/...` |  |
+| Factor raw input |  |  | `<implementation module>` |  |
+| Rolling window |  |  | `<implementation module>` |  |
+| Standardization |  |  | `<implementation module>` |  |
+| Signal ranking |  |  | `<implementation module>` |  |
+| Portfolio construction |  |  | `<implementation module>` |  |
+| Performance evaluation |  |  | `<implementation module>` |  |
 
 Use file paths, class names, and function/method names. Include line numbers only if they are stable and easy to verify.
 
@@ -92,10 +92,10 @@ Examples:
 - turnover
 - drawdown
 
-## 9. Key Limitations
+## 9. Limitations And Unresolved Items
 
 Explain which parts of the math are exact, approximated, inferred, or missing.
 
-## 10. Bottom Line
+## 10. Current Interpretation
 
-One short paragraph explaining what was successfully reproduced and what should be manually reviewed.
+One short paragraph stating which elements were reproduced and which require further review.

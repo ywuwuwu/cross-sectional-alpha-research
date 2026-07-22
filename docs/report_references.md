@@ -1,40 +1,35 @@
-# Report References
+# Research Sources And Evidence Policy
 
-The original source reports used during development are not redistributed in this repository because they may contain copyrighted or licensed content.
+External research reports informed factor hypotheses during local development.
+Copyrighted reports and licensed datasets are not redistributed.
 
-This project focuses on reproducing the analytical logic of factor research reports using local data. The public repository includes the implementation framework, Codex skill, documentation, and reproducibility workflow.
+The public repository distinguishes three evidence layers:
 
-## Internal report modules used during development
-
-| Module | Public Description | Public Status |
+| Layer | Public content | Interpretation |
 |---|---|---|
-| Module 1 | Reversal factor research | Internal source not redistributed |
-| Module 2 | Turnover stability factor research | Internal source not redistributed |
-| Module 3 | CPV / price-volume correlation factor research | https://www.scribd.com/document/840833885 |
-| Module 4 | Factor segmentation and refinement research | https://bigquant.com/wiki/doc/itpJKGIA6a |
-| Module 5 | Volume-adjusted momentum factor research | https://bigquant.com/wiki/doc/b15vA5ca1d |
+| Formula reconstruction | High-level factor intuition and timing | Local implementation, not exact paper replication |
+| Portfolio mechanics | Small generic package, focused tests, and synthetic example | Reproducible without private strategies or data |
+| Empirical result | Aggregate return paths, metrics, and plots | Verifiable public summary of a private-data run |
 
-## Curated public outputs
+## Public Evidence Index
 
-The repository publishes only cleaned public examples, not the full local `reports/` directory.
+| Item | Location |
+|---|---|
+| Portfolio case study | `docs/case_studies/ubl_lowvol_portfolio.md` |
+| Methodology contract | `docs/methodology.md` |
+| UBL family path | `docs/case_studies/UBL.md` |
+| PaperUBL reconstruction | `docs/case_studies/PaperUBL.md` |
+| Candidate outcomes | `docs/candidate_outcomes.md` |
+| Aggregate evidence | `examples/sample_outputs/ubl_lowvol_study/data/` |
+| Publication plots | `examples/sample_outputs/ubl_lowvol_study/plots/` |
+| Evidence checksums | `examples/sample_outputs/ubl_lowvol_study/data/evidence_manifest.json` |
 
-| Output | Location | Notes |
-|---|---|---|
-| PaperUBL sample report | `examples/sample_outputs/paper_ubl/report.md` | Curated local-data sample with figures |
-| PaperUBL case study | `docs/case_studies/PaperUBL.md` | Current public flagship sample |
-| UBL improvement track | `docs/case_studies/UBL.md` | Work-in-progress track; stronger result to be published later |
-| Strategy comparison | `docs/case_studies/strategy_comparison.md` | Explains publish/withhold decisions |
+## Reporting Scope
 
-## Public reproduction principle
+The repository reports the selected blend relative to the frozen UBL baseline
+under the documented model. It does not establish exact reproduction,
+production readiness, proprietary-data availability, live execution, or future
+profitability.
 
-The project does not attempt to redistribute source reports. Instead, it reproduces:
-
-- factor intuition
-- factor formula
-- required data fields
-- signal construction
-- portfolio construction
-- backtest configuration
-- local-data validation
-- assumption logs
-- difference attribution
+Summary statements about the research-holdout comparison should also report the
+walk-forward, delay, cost, and data-provenance limitations.
