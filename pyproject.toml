@@ -20,7 +20,7 @@ plots = ["matplotlib>=3.6"]
 dev = ["matplotlib>=3.6", "pytest>=7"]
 
 [project.urls]
-Repository = "https://github.com/ywuwuwu/quant-factor-report-reproducer"
+Repository = "https://github.com/ywuwuwu/cross-sectional-alpha-research"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

@@ -52,7 +52,7 @@ parameters, borrow modeling, and live execution are outside this sample package.
 Python 3.10 or newer is recommended.
 
 ```bash
-cd quant-factor-report-reproducer
+cd cross-sectional-alpha-research
 python -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev]"
