@@ -1,7 +1,7 @@
 # Methodology
 
-This document defines the public research contract behind the frozen UBL plus
-LOWVOL_60 comparison. It is designed to prevent timing, sign, metric, and
+This document defines the public research contract behind the predefined UBL
+plus LOWVOL_60 comparison. It is designed to prevent timing, sign, metric, and
 transaction-cost conventions from changing between experiments.
 
 ## Point-in-Time Timing
@@ -57,7 +57,7 @@ settings.
 
 ## Universe And Tradability
 
-The frozen local contract required:
+The research universe required:
 
 - at least 60 rows of history for the common UBL universe;
 - valid OHLCV observations;
@@ -84,7 +84,7 @@ but it has now been viewed and cannot be reused for further selection.
 
 ## Portfolio Construction
 
-The frozen UBL family uses internal risk budgets:
+The selected UBL family uses internal risk budgets:
 
 ```text
 PaperUBL 3D = 0.60
@@ -178,11 +178,10 @@ scheme, not probabilities of future success.
 
 ## Reproducibility Scope
 
-The aggregate bundle was regenerated from a clean, committed private research
-tree. Before writing public artifacts, `tools/build_public_evidence.py`
-verifies every private snapshot hash, the recorded source commit and tree, the
-configuration hash, dependency-lock hash, and clean state of both repositories.
-The public evidence manifest records these values without local paths.
+Before writing aggregate files, `tools/build_public_evidence.py` checks the
+versioned private snapshot and stops if either the private or public worktree
+has uncommitted changes. A detailed record of source versions and output hashes
+is retained locally rather than published.
 
 The committed aggregate CSVs are the numerical inputs for every public table
 and figure, so `examples/render_public_results.py` can regenerate the figures

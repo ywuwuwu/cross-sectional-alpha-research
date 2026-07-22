@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Build public-safe evidence from a verified clean private snapshot.
+"""Build public-safe aggregate results from a clean private snapshot.
 
 The builder validates the private snapshot manifest and Git provenance before
 writing aggregate CSVs and figures. Security identifiers, weights, factor
 values, raw market data, local paths, and private formulas are excluded.
+The detailed build record is generated locally and ignored by Git.
 """
 
 from __future__ import annotations
@@ -478,7 +479,7 @@ def build(source: Path, output_root: Path) -> list[Path]:
         }
         serialized = json.dumps(manifest, indent=2, sort_keys=True) + "\n"
         if str(Path.home()) in serialized or str(source.resolve()) in serialized:
-            raise RuntimeError("Public evidence manifest contains a private local path")
+            raise RuntimeError("Local audit manifest contains a private local path")
         manifest_path = data_dir / "evidence_manifest.json"
         manifest_path.write_text(serialized, encoding="utf-8")
         return install_staged_files(staging_root, output_root)

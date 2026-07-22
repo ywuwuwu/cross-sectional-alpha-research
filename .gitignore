@@ -91,6 +91,9 @@ docs/case_studies/VolumeMomentumStrategy.md
 !examples/sample_outputs/ubl_lowvol_study/data/
 !examples/sample_outputs/ubl_lowvol_study/data/**
 
+# Generated release audit; retained locally and not published
+examples/sample_outputs/ubl_lowvol_study/data/evidence_manifest.json
+
 # Only the audited public evidence builder is tracked
 tools/*
 !tools/build_public_evidence.py

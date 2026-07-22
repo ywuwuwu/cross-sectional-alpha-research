@@ -2,8 +2,8 @@
 
 This repository contains two complementary components:
 
-1. A documented China A-share portfolio case study supported by
-   checksum-protected aggregate evidence.
+1. A documented China A-share portfolio case study with aggregate result
+   tables and figures.
 2. A strategy-agnostic Python package for point-in-time validation,
    portfolio accounting, transaction costs, paired block-bootstrap
    comparisons, and report generation.
@@ -77,12 +77,12 @@ CSVs:
 python examples/render_public_results.py
 ```
 
-Release maintainers can rebuild both the aggregate CSVs and figures from a
-verified private snapshot. The command refuses dirty source or public
-worktrees:
+Release maintainers can rebuild both the aggregate CSVs and figures from the
+versioned private research snapshot. The command stops if either source or
+public worktree has uncommitted changes:
 
 ```bash
-PRIVATE_SNAPSHOT=/path/to/immutable/ubl_lowvol_snapshot
+PRIVATE_SNAPSHOT=/path/to/ubl_lowvol_snapshot
 python tools/build_public_evidence.py --source "$PRIVATE_SNAPSHOT"
 ```
 
@@ -136,14 +136,14 @@ Visualizer(result).save_report("outputs/example_report")
 
 ## Research-Holdout Comparison
 
-On a 133-observation chronological research holdout, the frozen 80% UBL / 20%
-LOWVOL_60 portfolio had net Sharpe 1.36 after a 10 bps per dollar traded cost
+On a 133-observation chronological research holdout, the predefined 80% UBL /
+20% LOWVOL_60 portfolio had net Sharpe 1.36 after a 10 bps per dollar traded cost
 model, versus 0.60 for UBL alone. Net max drawdown declined from 4.82% to 4.05%,
 average full turnover declined from 0.532 to 0.462, and break-even cost increased
 from 13.12 to 17.93 bps.
 
-Across four frozen paired block-bootstrap schemes, the blend had higher Sharpe
-than UBL in 95.2% of resamples from the observed holdout.
+Across four prespecified paired block-bootstrap schemes, the blend had higher
+Sharpe than UBL in 95.2% of resamples from the observed holdout.
 
 | Metric                                 | UBL only  | UBL + LOWVOL |
 | -------------------------------------- | --------- | ------------ |
@@ -179,7 +179,7 @@ test.
 
 ![Paired walk-forward folds](examples/sample_outputs/ubl_lowvol_study/plots/05_walk_forward_fold_returns.png)
 
-## Frozen Portfolio Specification
+## Portfolio Specification
 
 **UBL family sleeve**
 
@@ -189,8 +189,8 @@ test.
 | UBL_M20 3D  | 20%                  |
 | UBL_M5 5D   | 20%                  |
 
-The UBL family first applies its frozen 7.5 bps security-weight-change band and
-is then treated as one top-level sleeve.
+The UBL family first applies its predefined 7.5 bps security-weight-change band
+and is then treated as one top-level sleeve.
 
 **Top-level blend**
 
@@ -236,24 +236,22 @@ portfolios are negative at 20 bps.
 ![Paired bootstrap Sharpe difference](examples/sample_outputs/ubl_lowvol_study/plots/04_paired_bootstrap_sharpe_difference.png)
 
 The plot shows the 5-day moving-block specification with 5,000 resamples. The
-reported 95.2% is the mean frequency across four frozen block schemes. It is an
-observed-sample resampling frequency, not a probability of future profitability.
+reported 95.2% is the mean frequency across four prespecified block schemes.
+It is an observed-sample resampling frequency, not a probability of future profitability.
 
 The full figure set and data dictionary are in the
 [portfolio output bundle](examples/sample_outputs/ubl_lowvol_study/README.md).
 
-## Evidence Provenance
+## Published Data Scope
 
-The current bundle was regenerated from private research commit
-`96283e987df4d7000f3a6a14eb504201d765bcea`. The private source tree and
-the public curation tree were both clean before generation. The
-[evidence manifest](examples/sample_outputs/ubl_lowvol_study/data/evidence_manifest.json)
-records the source tree, configuration, dependency-lock, builder, renderer, and
-artifact hashes.
+The committed aggregate CSVs are the inputs to every published table and
+figure. Run `python examples/render_public_results.py` to regenerate the six
+figures without private data.
 
-The public figures are reproducible from the committed aggregate CSVs. The
-security-level strategy is intentionally not independently reproducible here
-because formulas, holdings, licensed data, and the private engine are excluded.
+The aggregate files do not include security-level holdings, licensed market
+data, exact factor formulas, or the private backtest engine. They therefore
+support review of the reported portfolio results, but not an independent rerun
+of the underlying security-level strategy.
 
 ## Repository Map
 
@@ -298,13 +296,12 @@ A suggested review order is:
    [PaperUBL reconstruction](docs/case_studies/PaperUBL.md).
 4. Compare UBL and UBL + LOWVOL in the
    [combined-portfolio study](docs/case_studies/ubl_lowvol_portfolio.md).
-5. Inspect the committed CSV files and
-   [evidence manifest](examples/sample_outputs/ubl_lowvol_study/data/evidence_manifest.json).
+5. Inspect the committed aggregate CSV files used to render the figures.
 6. Review [candidate outcomes](docs/candidate_outcomes.md) and the remaining
    limitations.
 
 The sample package demonstrates mechanics. It cannot reproduce the private
-security-level backtest from the aggregate evidence.
+security-level backtest from the aggregate result files.
 
 ## Research Sequence
 
@@ -312,11 +309,11 @@ security-level backtest from the aggregate evidence.
 - Audit direction and point-in-time timing.
 - Compare holding horizons and rebalance offsets.
 - Test family redundancy and incremental return information.
-- Attribute turnover and freeze a no-trade rule.
+- Attribute turnover and select a no-trade rule on validation data.
 - Evaluate economic exposures, capacity, and weak regimes.
 - Evaluate and close the medium-term momentum candidates.
 - Qualify LOWVOL_60 as a defensive sleeve.
-- Compare the frozen UBL portfolio with the UBL + LOWVOL portfolio.
+- Compare the predefined UBL portfolio with the UBL + LOWVOL portfolio.
 
 ## Limitations And Open Questions
 
@@ -329,20 +326,21 @@ security-level backtest from the aggregate evidence.
   0.46.
 - Borrow availability, financing, market impact, and short-sale constraints are
   not modeled.
-- Adjusted-price provenance and pre-2020 LOWVOL_60 warm-up data were not
+- The adjusted-price source and pre-2020 LOWVOL_60 warm-up inputs were not
   independently verified.
 - The public sample package is not the private strategy engine and does not
   reproduce the published aggregate returns by itself.
 
-The next planned research test is unchanged-rule replication on genuinely new,
-adjustment-verified data with borrow and execution evidence.
+The next planned research test is unchanged-rule replication on new data with
+independently checked corporate-action adjustments, borrow assumptions, and
+execution constraints.
 
 ## Candidate Outcomes
 
-Two conventional medium-term momentum definitions were frozen with a positive
-direction and were not selected. Both had negative validation RankIC and
-negative gross and net returns. Their predefined sign was retained throughout
-evaluation. Details are in
+Two conventional medium-term momentum definitions were evaluated with a
+prespecified positive direction and were not selected. Both had negative
+validation RankIC and negative gross and net returns. Their predefined sign was
+retained throughout evaluation. Details are in
 [candidate_outcomes.md](docs/candidate_outcomes.md).
 
 ## Optional Report-Reproduction Skill

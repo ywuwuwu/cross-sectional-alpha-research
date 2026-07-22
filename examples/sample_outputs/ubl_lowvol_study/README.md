@@ -1,8 +1,9 @@
-# UBL Plus LOWVOL Portfolio Output
+# UBL And LOWVOL Portfolio Results
 
-This folder contains portfolio-level evidence for the frozen UBL plus LOWVOL
-comparison. It contains no stock identifiers, holdings, raw prices, factor
-values, local paths, exact private UBL formulas, or private strategy code.
+This folder contains aggregate portfolio results for the predefined UBL and
+LOWVOL comparison. It contains no stock identifiers, holdings, raw prices,
+factor values, local paths, exact private UBL formulas, or private strategy
+code.
 
 ## Research-Holdout Comparison
 
@@ -52,11 +53,10 @@ a gross-2 dollar-neutral book.
 | `portfolio_returns.csv` | Same-date aggregate returns, turnover, and cost for UBL and the blend |
 | `cost_sensitivity.csv` | Full-common-sample 5/10/15/20 bps results |
 | `walk_forward_folds.csv` | Four paired fixed-rule fold outcomes |
-| `bootstrap_method_summary.csv` | Frozen holdout frequencies for four block schemes |
+| `bootstrap_method_summary.csv` | Holdout frequencies for four prespecified block schemes |
 | `bootstrap_sharpe_differences.csv` | 5,000 paired 5-day moving-block Sharpe differences |
 | `pnl_concentration.csv` | Full-common top-five-day PnL concentration |
 | `robustness_summary.csv` | Compact robustness values used in the project README |
-| `evidence_manifest.json` | Source snapshot ID, exclusions, and SHA-256 checksums |
 
 ## Regenerate Figures
 
@@ -67,16 +67,15 @@ pip install -e ".[plots]"
 python examples/render_public_results.py
 ```
 
-## Evidence Review
+## Reading The Results
 
-The CSV files are the aggregate inputs for the committed figures.
-`data/evidence_manifest.json` records hashes for every released table and
-figure, the clean private source commit and tree, configuration and dependency
-hashes, and the clean public curation commit.
+The CSV files are the aggregate inputs for the committed figures. They allow
+the charts and summary tables to be regenerated, but they do not expose enough
+information to rerun the private security-level strategy.
 
-The aggregate files do not make the private security-level strategy
-independently reproducible. The holdout has been viewed, paired walk-forward
-Sharpe is -0.07, only 2/4 folds are positive, and an additional execution day
-reduces full-sample Sharpe to 0.46.
+The holdout has been viewed, paired walk-forward Sharpe is -0.07, only 2/4
+folds are positive, and an additional execution day reduces full-sample Sharpe
+to 0.46. These results are important limits on the favorable holdout
+comparison.
 
 See the [combined-portfolio case study](../../../docs/case_studies/ubl_lowvol_portfolio.md).

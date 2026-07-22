@@ -1,7 +1,7 @@
-# Portfolio-Level Evidence Schema
+# Portfolio Data Dictionary
 
-These files are portfolio-level derivatives of the frozen UBL plus LOWVOL
-comparison.
+These files contain aggregate portfolio results for the predefined UBL and
+LOWVOL comparison.
 
 - `date` is the common portfolio return date.
 - `split` is `train`, `validation`, or `research_holdout`.
@@ -12,6 +12,4 @@ comparison.
 - Max drawdown fields are positive decimal losses.
 
 The files omit stock identifiers, holdings, factor values, raw market data, and
-private strategy code. `evidence_manifest.json` records SHA-256 hashes for
-every released CSV and figure, plus the clean private source commit and tree,
-configuration and dependency hashes, and clean public builder commit.
+private strategy code.
