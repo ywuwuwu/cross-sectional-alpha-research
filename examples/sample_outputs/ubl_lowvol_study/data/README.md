@@ -12,5 +12,6 @@ comparison.
 - Max drawdown fields are positive decimal losses.
 
 The files omit stock identifiers, holdings, factor values, raw market data, and
-private strategy code. SHA-256 hashes are recorded in
-`evidence_manifest.json`.
+private strategy code. `evidence_manifest.json` records SHA-256 hashes for
+every released CSV and figure, plus the clean private source commit and tree,
+configuration and dependency hashes, and clean public builder commit.

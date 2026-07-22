@@ -90,3 +90,7 @@ docs/case_studies/VolumeMomentumStrategy.md
 # Narrow public exception: aggregate portfolio evidence only
 !examples/sample_outputs/ubl_lowvol_study/data/
 !examples/sample_outputs/ubl_lowvol_study/data/**
+
+# Only the audited public evidence builder is tracked
+tools/*
+!tools/build_public_evidence.py

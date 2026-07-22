@@ -1,14 +1,16 @@
 # Cost-Aware Cross-Sectional Alpha Research
 
-A research repository combining two public surfaces:
+This repository contains two complementary components:
 
-1. a documented UBL plus low-volatility portfolio study with aggregate evidence;
-2. a small, formula-agnostic Python package demonstrating point-in-time
-   validation, portfolio accounting, evaluation, and report generation.
+1. A documented China A-share portfolio case study supported by
+   checksum-protected aggregate evidence.
+2. A strategy-agnostic Python package for point-in-time validation,
+   portfolio accounting, transaction costs, paired block-bootstrap
+   comparisons, and report generation.
 
-The package starts from precomputed, oriented `alpha_score` values. It does
-not contain the private UBL formulas, strategy factories, security-level
-research data, or the local production-style backtest engine.
+The public package begins with precomputed, directionally oriented factor
+scores. Report-derived factor implementations, licensed market data, and
+the internal security-level research engine are not redistributed.
 
 > Results are simulated and unaudited. They are not investment advice or live
 > trading performance.
@@ -20,12 +22,12 @@ research data, or the local production-style backtest engine.
 The code under `src/alpha_research/` is intentionally small. Its purpose
 is to make the research mechanics inspectable without publishing the strategies.
 
-| Module | Public responsibility |
-|---|---|
-| `runner.py` | Validate timestamps, form score tails, calculate IC/RankIC, and build a weight ledger |
-| `portfolio.py` | Dollar-neutral normalization, sleeve combination, turnover, costs, and PnL |
-| `metrics.py` | Sharpe, drawdown, summaries, and paired moving-block bootstrap |
-| `visualization.py` | NAV, drawdown, turnover, RankIC, comparison plots, and Markdown reports |
+| Module             | Public responsibility                                                                 |
+| ------------------ | ------------------------------------------------------------------------------------- |
+| `runner.py`        | Validate timestamps, form score tails, calculate IC/RankIC, and build a weight ledger |
+| `portfolio.py`     | Dollar-neutral normalization, sleeve combination, turnover, costs, and PnL            |
+| `metrics.py`       | Sharpe, drawdown, summaries, and paired moving-block bootstrap                        |
+| `visualization.py` | NAV, drawdown, turnover, RankIC, comparison plots, and Markdown reports               |
 
 The runner always interprets a higher `alpha_score` as a higher expected
 return. It requires:
@@ -68,25 +70,35 @@ ledger, summary JSON, four plots, and `report.md` under
 `outputs/sample_package/`. The generated performance is a mechanics
 check, not an empirical claim.
 
-Regenerate the six committed portfolio figures:
+Regenerate the six committed portfolio figures from the public aggregate
+CSVs:
 
 ```bash
 python examples/render_public_results.py
+```
+
+Release maintainers can rebuild both the aggregate CSVs and figures from a
+verified private snapshot. The command refuses dirty source or public
+worktrees:
+
+```bash
+PRIVATE_SNAPSHOT=/path/to/immutable/ubl_lowvol_snapshot
+python tools/build_public_evidence.py --source "$PRIVATE_SNAPSHOT"
 ```
 
 ## Input Schema
 
 The generic runner expects one row per factor date and asset:
 
-| Column | Meaning |
-|---|---|
-| `factor_date` | Date associated with the score |
+| Column                          | Meaning                              |
+| ------------------------------- | ------------------------------------ |
+| `factor_date`                   | Date associated with the score       |
 | `latest_factor_input_timestamp` | Latest information used by the score |
-| `entry_timestamp` | Simulated execution timestamp |
-| `exit_timestamp` | Return-measurement endpoint |
-| `asset` | Anonymous or public asset identifier |
-| `alpha_score` | Oriented score; higher means better |
-| `forward_return` | Realized return strictly after entry |
+| `entry_timestamp`               | Simulated execution timestamp        |
+| `exit_timestamp`                | Return-measurement endpoint          |
+| `asset`                         | Anonymous or public asset identifier |
+| `alpha_score`                   | Oriented score; higher means better  |
+| `forward_return`                | Realized return strictly after entry |
 
 ## API Example
 
@@ -133,14 +145,14 @@ from 13.12 to 17.93 bps.
 Across four frozen paired block-bootstrap schemes, the blend had higher Sharpe
 than UBL in 95.2% of resamples from the observed holdout.
 
-| Metric | UBL only | UBL + LOWVOL |
-|---|---:|---:|
-| Research-holdout net Sharpe | 0.60 | 1.36 |
-| Research-holdout net return | 2.10% | 4.87% |
-| Research-holdout net max drawdown | 4.82% | 4.05% |
-| Average full turnover | 0.532 | 0.462 |
-| Break-even cost | 13.12 bps | 17.93 bps |
-| Paired bootstrap P(Sharpe improvement) | - | 95.2% |
+| Metric                                 | UBL only  | UBL + LOWVOL |
+| -------------------------------------- | --------- | ------------ |
+| Research-holdout net Sharpe            | 0.60      | 1.36         |
+| Research-holdout net return            | 2.10%     | 4.87%        |
+| Research-holdout net max drawdown      | 4.82%     | 4.05%        |
+| Average full turnover                  | 0.532     | 0.462        |
+| Break-even cost                        | 13.12 bps | 17.93 bps    |
+| Paired bootstrap P(Sharpe improvement) | -         | 95.2%        |
 
 All returns are model results. Sharpe is annualized with a zero cash hurdle.
 Turnover is full turnover, `sum(abs(w_t - w_t-1))`, for a book
@@ -151,14 +163,14 @@ normalized to long gross +1 and short gross -1.
 The holdout comparison favors the blend, while results remain uneven across
 time.
 
-| Robustness check | Result |
-|---|---:|
-| Validation net Sharpe | 1.69 |
-| Full-common-sample net Sharpe | 1.64 |
-| Full-common-sample net Sharpe at 15 bps | 0.71 |
-| Paired walk-forward Sharpe | -0.07 |
-| Positive walk-forward folds | 2 / 4 |
-| One-additional-day execution-delay Sharpe | 0.46 |
+| Robustness check                          | Result |
+| ----------------------------------------- | ------ |
+| Validation net Sharpe                     | 1.69   |
+| Full-common-sample net Sharpe             | 1.64   |
+| Full-common-sample net Sharpe at 15 bps   | 0.71   |
+| Paired walk-forward Sharpe                | -0.07  |
+| Positive walk-forward folds               | 2 / 4  |
+| One-additional-day execution-delay Sharpe | 0.46   |
 
 The paired walk-forward aggregate remains slightly negative and only two of four
 folds are positive. The additional execution day materially weakens the result.
@@ -171,21 +183,21 @@ test.
 
 **UBL family sleeve**
 
-| Component | Internal risk budget |
-|---|---:|
-| PaperUBL 3D | 60% |
-| UBL_M20 3D | 20% |
-| UBL_M5 5D | 20% |
+| Component   | Internal risk budget |
+| ----------- | -------------------- |
+| PaperUBL 3D | 60%                  |
+| UBL_M20 3D  | 20%                  |
+| UBL_M5 5D   | 20%                  |
 
 The UBL family first applies its frozen 7.5 bps security-weight-change band and
 is then treated as one top-level sleeve.
 
 **Top-level blend**
 
-| Sleeve | Risk budget |
-|---|---:|
-| UBL family | 80% |
-| LOWVOL_60 | 20% |
+| Sleeve     | Risk budget |
+| ---------- | ----------- |
+| UBL family | 80%         |
+| LOWVOL_60  | 20%         |
 
 Each sleeve is divided by training-only realized portfolio volatility. Security
 weights are combined, normalized to long +1 / short -1, passed through a common
@@ -230,6 +242,19 @@ observed-sample resampling frequency, not a probability of future profitability.
 The full figure set and data dictionary are in the
 [portfolio output bundle](examples/sample_outputs/ubl_lowvol_study/README.md).
 
+## Evidence Provenance
+
+The current bundle was regenerated from private research commit
+`96283e987df4d7000f3a6a14eb504201d765bcea`. The private source tree and
+the public curation tree were both clean before generation. The
+[evidence manifest](examples/sample_outputs/ubl_lowvol_study/data/evidence_manifest.json)
+records the source tree, configuration, dependency-lock, builder, renderer, and
+artifact hashes.
+
+The public figures are reproducible from the committed aggregate CSVs. The
+security-level strategy is intentionally not independently reproducible here
+because formulas, holdings, licensed data, and the private engine are excluded.
+
 ## Repository Map
 
 ```text
@@ -246,6 +271,8 @@ The full figure set and data dictionary are in the
 |   `-- sample_outputs/ubl_lowvol_study/
 |       |-- data/
 |       `-- plots/
+|-- tools/
+|   `-- build_public_evidence.py
 |-- tests/test_sample_package.py
 |-- docs/
 |   |-- methodology.md
@@ -304,8 +331,6 @@ security-level backtest from the aggregate evidence.
   not modeled.
 - Adjusted-price provenance and pre-2020 LOWVOL_60 warm-up data were not
   independently verified.
-- The source snapshot was captured from a research worktree with uncommitted
-  local changes.
 - The public sample package is not the private strategy engine and does not
   reproduce the published aggregate returns by itself.
 

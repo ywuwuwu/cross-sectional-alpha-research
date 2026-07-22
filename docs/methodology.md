@@ -178,11 +178,18 @@ scheme, not probabilities of future success.
 
 ## Reproducibility Scope
 
-The committed aggregate files provide the numerical inputs used in the public
-tables and figures, with data-file checksums recorded in the evidence manifest.
+The aggregate bundle was regenerated from a clean, committed private research
+tree. Before writing public artifacts, `tools/build_public_evidence.py`
+verifies every private snapshot hash, the recorded source commit and tree, the
+configuration hash, dependency-lock hash, and clean state of both repositories.
+The public evidence manifest records these values without local paths.
+
+The committed aggregate CSVs are the numerical inputs for every public table
+and figure, so `examples/render_public_results.py` can regenerate the figures
+without private data.
 
 The public sample package can validate generic score timing, portfolio
 accounting, metrics, and report generation on synthetic or user-supplied
 oriented scores. It does not construct the private factors or reproduce the
-original security-level backtest because raw market data, holdings, private
-factor values, exact UBL formulas, and the local adapter engine are excluded.
+security-level backtest because raw market data, holdings, private factor
+values, exact UBL formulas, and the local adapter engine are excluded.

@@ -69,9 +69,10 @@ python examples/render_public_results.py
 
 ## Evidence Review
 
-The CSV and JSON files are the aggregate inputs for the committed figures.
-SHA-256 checksums for the data files are recorded in
-`data/evidence_manifest.json`.
+The CSV files are the aggregate inputs for the committed figures.
+`data/evidence_manifest.json` records hashes for every released table and
+figure, the clean private source commit and tree, configuration and dependency
+hashes, and the clean public curation commit.
 
 The aggregate files do not make the private security-level strategy
 independently reproducible. The holdout has been viewed, paired walk-forward
