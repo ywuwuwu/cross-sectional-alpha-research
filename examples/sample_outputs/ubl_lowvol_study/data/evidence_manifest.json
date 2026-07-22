@@ -1,9 +1,5 @@
 {
-  "source_snapshot_id": "20260720_ubl_lowvol_portfolio_v1",
-  "contract_version": "ubl_lowvol_portfolio_v1",
-  "source_commit_record": "commit=99a40aec375d001d2ae50579ca8246155128f67f",
-  "source_worktree_was_dirty": true,
-  "public_scope": "aggregate portfolio evidence only",
+  "contract_version": "phase8_ubl_lowvol_portfolio_v1",
   "excluded": [
     "raw market data",
     "security identifiers and weights",
@@ -12,13 +8,53 @@
     "private strategy implementation and research engine"
   ],
   "files": {
-    "headline_metrics.csv": "908e0eeaff2674550ffa993d66528796b5702c6ec223764d319740c183e9006b",
-    "portfolio_returns.csv": "9c074d9a11e88a64128216dcd9538489eb301b4384e34d71cf64015e79b16bea",
-    "cost_sensitivity.csv": "e30a596e69bc640760eff279c1c785768ee73fb1db23b45172b9f6b8d23bf039",
-    "walk_forward_folds.csv": "4fe2ee189468bf06514846adb5b92438fe1d2ea4009b960309b73c7c2d571ac6",
-    "bootstrap_method_summary.csv": "5daf790296dfbada15c6af9d4c202cd9892c12c632f244ca5f68ee52f75136d9",
-    "bootstrap_sharpe_differences.csv": "1ff889d035389cb4bf74ad382f993ed8b7a0db71868cbbf982ee51a203b6f77b",
-    "pnl_concentration.csv": "6d22288cb703b7f0e44d0e0fb7edfe4b898519cc5c25cbb113b501c65bf7c27e",
-    "robustness_summary.csv": "bdb296472782a891498c32da64f6efdd60dc7511b493785159b8981d9101a10d"
-  }
+    "data/bootstrap_method_summary.csv": "5daf790296dfbada15c6af9d4c202cd9892c12c632f244ca5f68ee52f75136d9",
+    "data/bootstrap_sharpe_differences.csv": "1ff889d035389cb4bf74ad382f993ed8b7a0db71868cbbf982ee51a203b6f77b",
+    "data/cost_sensitivity.csv": "e30a596e69bc640760eff279c1c785768ee73fb1db23b45172b9f6b8d23bf039",
+    "data/headline_metrics.csv": "908e0eeaff2674550ffa993d66528796b5702c6ec223764d319740c183e9006b",
+    "data/pnl_concentration.csv": "6d22288cb703b7f0e44d0e0fb7edfe4b898519cc5c25cbb113b501c65bf7c27e",
+    "data/portfolio_returns.csv": "9c074d9a11e88a64128216dcd9538489eb301b4384e34d71cf64015e79b16bea",
+    "data/robustness_summary.csv": "bdb296472782a891498c32da64f6efdd60dc7511b493785159b8981d9101a10d",
+    "data/walk_forward_folds.csv": "4fe2ee189468bf06514846adb5b92438fe1d2ea4009b960309b73c7c2d571ac6",
+    "plots/01_net_nav_comparison.png": "c237767548e6660526cb97fba0ee76b7c08b8f8a190726ccc6d8988f000ca78a",
+    "plots/02_drawdown_comparison.png": "275342db9463787d30d85ab1aad08272db6c113a2ea47c7d97860beea8889a85",
+    "plots/03_transaction_cost_frontier.png": "7a82d3caba06a6c1a6ce45420e23db0f12686e3f945a376aa7d4a01338413b3d",
+    "plots/04_paired_bootstrap_sharpe_difference.png": "6b00e71b8010eaf21cf66ef85d7fea61472f306e3ecee6e52fdc6f31aab49cbb",
+    "plots/05_walk_forward_fold_returns.png": "ebbbfbb1b5383d22b968a4c5e958252c5ed689b17cc4b9d4cd32d8335f676168",
+    "plots/06_pnl_concentration.png": "380dee8de6b5358ced036a9d12c860a8b9d8abeec2e3070b9c24a587b211d885"
+  },
+  "public_curation": {
+    "builder": "tools/build_public_evidence.py",
+    "builder_sha256": "b0e98109842163e3d54fd1ef0c065c438b30b8e7bc29bde693067ea1edec68b2",
+    "commit": "7a4eca896cd736278c6b252a2d0c1689ddadbe4c",
+    "renderer": "examples/render_public_results.py",
+    "renderer_sha256": "9bba8de8afa9b54ee8bb8257b9163f4d7b4c51665ae6c30c08f2a5ec4b2cdfe2",
+    "tree": "18ff86c77114ec1407659e3b74188eca9bd1dfed",
+    "worktree_clean_before_generation": true
+  },
+  "public_scope": "aggregate portfolio evidence only",
+  "research_source": {
+    "commit": "96283e987df4d7000f3a6a14eb504201d765bcea",
+    "config_hashes_sha256": "b40b13f9132d2f8e087471f5f78c1ff59df33d19cf3e9e7b90641795b734c34a",
+    "configuration_sha256": "aa1448a86a1a1517197fb1d1525b799f672ea13c46e84c9f761b3b78ed7ad626",
+    "contract_sha256": "04eb701c98a8b4f8447e2dba448296f35956b197dd128586997ef7ed236aa482",
+    "dependency_lock_sha256": "095c27f28c6c232d75d6ad3ac921446361f040c72e7ae643e1dd8b80491536ee",
+    "packages": {
+      "matplotlib": "3.10.3",
+      "numpy": "2.3.1",
+      "pandas": "2.3.1",
+      "pyarrow": "24.0.0",
+      "scikit-learn": "1.6.1"
+    },
+    "python": "3.11.13 (main, Jun  5 2025, 13:12:00) [GCC 11.2.0]",
+    "snapshot_manifest_file_count": 55,
+    "snapshot_manifest_sha256": "93fc4d227755e8b490f5e2764ec591f5516d1f4d8789d0f0d5373357864976e6",
+    "source_environment_sha256": "2d815599ce2307826156874fe6d76b631af682d651692512e74733daa86df73b",
+    "tree": "aa9b1d2aa845fc406859d0afe77925ecd3fe7de0",
+    "visibility": "private",
+    "worktree_clean_at_public_curation": true,
+    "worktree_clean_before_generation": true
+  },
+  "source_snapshot_id": "20260722_ubl_lowvol_clean_provenance_v1",
+  "source_worktree_was_dirty": false
 }

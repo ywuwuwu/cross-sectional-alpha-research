@@ -225,13 +225,9 @@ def test_public_plot_smoke() -> None:
     assert figure.axes
 
 
-PUBLIC_DATA = (
-    Path(__file__).resolve().parents[1]
-    / "examples"
-    / "sample_outputs"
-    / "ubl_lowvol_study"
-    / "data"
-)
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PUBLIC_ROOT = PROJECT_ROOT / "examples" / "sample_outputs" / "ubl_lowvol_study"
+PUBLIC_DATA = PUBLIC_ROOT / "data"
 
 
 def test_public_metrics_match_committed_evidence() -> None:
@@ -262,8 +258,60 @@ def test_public_evidence_manifest_hashes() -> None:
         (PUBLIC_DATA / "evidence_manifest.json").read_text(encoding="utf-8")
     )
     for name, expected in manifest["files"].items():
-        actual = hashlib.sha256((PUBLIC_DATA / name).read_bytes()).hexdigest()
+        actual = hashlib.sha256((PUBLIC_ROOT / name).read_bytes()).hexdigest()
         assert actual == expected, name
+
+
+def test_public_evidence_has_clean_reproducibility_provenance() -> None:
+    manifest_path = PUBLIC_DATA / "evidence_manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+    assert manifest["source_worktree_was_dirty"] is False
+    expected_snapshot = "20260722_ubl_lowvol_clean_provenance_v1"
+    assert manifest["source_snapshot_id"] == expected_snapshot
+    assert manifest["contract_version"] == "phase8_ubl_lowvol_portfolio_v1"
+
+    source = manifest["research_source"]
+    assert source["visibility"] == "private"
+    assert source["worktree_clean_before_generation"] is True
+    assert source["worktree_clean_at_public_curation"] is True
+    assert source["snapshot_manifest_file_count"] == 55
+
+    public = manifest["public_curation"]
+    assert public["worktree_clean_before_generation"] is True
+    assert public["builder"] == "tools/build_public_evidence.py"
+    assert public["renderer"] == "examples/render_public_results.py"
+
+    for record in (source, public):
+        assert len(record["commit"]) == 40
+        assert len(record["tree"]) == 40
+        int(record["commit"], 16)
+        int(record["tree"], 16)
+
+    for key in (
+        "snapshot_manifest_sha256",
+        "source_environment_sha256",
+        "configuration_sha256",
+        "contract_sha256",
+        "config_hashes_sha256",
+        "dependency_lock_sha256",
+    ):
+        assert len(source[key]) == 64
+        int(source[key], 16)
+
+    assert (
+        hashlib.sha256((PROJECT_ROOT / public["builder"]).read_bytes()).hexdigest()
+        == public["builder_sha256"]
+    )
+    assert (
+        hashlib.sha256((PROJECT_ROOT / public["renderer"]).read_bytes()).hexdigest()
+        == public["renderer_sha256"]
+    )
+
+    serialized = manifest_path.read_text(encoding="utf-8")
+    assert "/" + "home/" not in serialized
+    assert "/" + "Users/" not in serialized
+    assert len(manifest["files"]) == 14
 
 
 def test_public_package_uses_only_declared_dependencies() -> None:
