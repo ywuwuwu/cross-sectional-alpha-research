@@ -1,4 +1,4 @@
-# UBL Family Research Track
+# UBL Family Analysis
 
 ## Purpose
 
@@ -7,23 +7,23 @@ than one formula and one backtest. The research objective is to determine
 whether related UBL definitions contain stable cross-sectional information that
 can be converted into a cost-aware portfolio.
 
-Exact private formulas and security-level factor values are not published. The
-public record focuses on timing, direction, candidate selection, portfolio
-construction, and economic validation.
+Report-derived factor implementations, licensed data, and security-level factor
+values are not redistributed. The analysis focuses on timing, direction,
+candidate selection, portfolio construction, and economic validation.
 
-## Research Sequence
+## Analysis Approach
 
-1. Reconstruct a paper-style UBL reference.
-2. Define one oriented `alpha_score` convention.
-3. Correct IC and group diagnostics to use next-period returns.
-4. Sweep a small preregistered set of horizons and rebalance offsets.
-5. Decompose long and short legs.
-6. Prune redundant family members using score, IC, return, holding, and drawdown
+1. Reconstructed a paper-style UBL reference.
+2. Defined one oriented `alpha_score` convention.
+3. Corrected IC and group diagnostics to use next-period returns.
+4. Evaluated a small pre-specified set of horizons and rebalance offsets.
+5. Decomposed long and short legs.
+6. Compared related family members using score, IC, return, holding, and drawdown
    correlations.
-7. Test incremental alpha relative to PaperUBL.
-8. Combine selected security weights before costs.
-9. Diagnose turnover and freeze one no-trade policy.
-10. Add only a preregistered diversifier that improves portfolio economics.
+7. Tested incremental alpha relative to PaperUBL.
+8. Combined selected security weights before costs.
+9. Selected one no-trade policy using validation data.
+10. Tested one pre-specified diversifier for improved portfolio economics.
 
 ## Direction And Timing
 
@@ -41,11 +41,11 @@ to a higher alpha score.
 Complete date-`t` OHLCV inputs are observed after the close. The resulting
 portfolio is entered at the next tradable VWAP and evaluated against a later
 exit benchmark. The old same-file daily IC/group diagnostics were withdrawn and
-are not part of the public evidence.
+are not used in the published performance results.
 
 ## Selected Family
 
-The frozen top-level UBL sleeve contains:
+The selected top-level UBL sleeve contains:
 
 | Component | Role | Internal risk budget |
 |---|---|---:|
@@ -53,8 +53,8 @@ The frozen top-level UBL sleeve contains:
 | UBL_M20 3D | Slower challenger | 20% |
 | UBL_M5 5D | Specialist | 20% |
 
-Related M10 and other windows remain in the private evidence library as
-redundant, diagnostic, or watchlist candidates. They were not deleted.
+Related M10 and other windows remain documented as redundant, diagnostic, or
+watchlist candidates rather than active components.
 
 ## Family-Level Rationale
 
@@ -65,8 +65,8 @@ noise and turnover. The family process asks two separate questions:
 - Does it retain incremental residual information after the lead candidate?
 
 Candidates with very high score and return correlation are not automatically
-mixed. Redundant candidates are retained for audit but removed from active
-complexity.
+mixed. Redundant candidates remain documented but are excluded from the active
+blend.
 
 ## Portfolio Implementation
 
@@ -75,7 +75,7 @@ The selected family:
 - combines security-level sleeve weights;
 - scales sleeves with training-only volatility;
 - normalizes to long +1 and short -1;
-- applies a frozen 7.5 bps security-weight-change band;
+- applies the 7.5 bps security-weight-change band selected on validation data;
 - calculates transaction costs after aggregate trade netting.
 
 This implementation replaced top-N long-only return as the primary evidence.

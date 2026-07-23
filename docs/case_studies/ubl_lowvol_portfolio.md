@@ -1,12 +1,12 @@
-# Case Study: Frozen UBL Plus LOWVOL_60
+# Case Study: UBL Plus LOWVOL_60
 
-## Portfolio Selection Status
+## Summary
 
-The frozen 80% UBL / 20% LOWVOL_60 portfolio met 8 of 10 preregistered inclusion
-checks, including every mandatory check, and was retained as the combined
-research portfolio.
+The pre-specified 80% UBL / 20% LOWVOL_60 portfolio met 8 of 10 inclusion
+criteria, including every mandatory criterion, and was selected for comparison
+with the UBL baseline.
 
-The portfolio remains a research specification. The sample is short, the
+The portfolio remains a simulated research result. The sample is short, the
 holdout has been viewed, paired walk-forward performance remains negative, and
 borrow, impact, adjusted prices, and genuinely new data are unresolved.
 
@@ -23,13 +23,13 @@ following implementation concerns:
 
 The combination test addressed one question:
 
-> Does a frozen 20% risk allocation to a slower LOWVOL_60 sleeve improve several
-> UBL weaknesses after security weights are combined and aggregate costs are
-> charged?
+> Does a pre-specified 20% risk allocation to a slower LOWVOL_60 sleeve improve
+> several UBL weaknesses after security weights are combined and aggregate
+> costs are charged?
 
 Family budgets were held fixed throughout the comparison.
 
-## Frozen Specification
+## Portfolio Specification
 
 | Layer | Rule |
 |---|---|
@@ -47,13 +47,13 @@ Family budgets were held fixed throughout the comparison.
 Security weights are combined before turnover and costs. This captures trade
 netting. Averaging standalone net-return series would not account for this.
 
-## Research-Holdout Comparison
+## Observed Chronological Holdout
 
 | Metric | UBL only | Selected blend | Change |
 |---|---:|---:|---:|
 | Observations | 133 | 133 | 0 |
 | Net total return | 2.10% | 4.87% | +2.77 pp |
-| Net Sharpe 0rf | 0.60 | 1.36 | +0.76 |
+| Annualized net Sharpe, 0% cash hurdle | 0.60 | 1.36 | +0.76 |
 | Net max drawdown | 4.82% | 4.05% | -0.77 pp |
 | Average full turnover | 0.532 | 0.462 | -0.070 |
 | Average one-way turnover | 0.266 | 0.231 | -0.035 |
@@ -83,7 +83,7 @@ the observed break-even cost between those two sensitivity points.
 
 ## Paired Bootstrap
 
-Across the four frozen holdout schemes:
+Across four pre-specified holdout resampling schemes:
 
 | Paired question | Mean observed frequency |
 |---|---:|
@@ -102,7 +102,7 @@ profitability.
 
 ## Walk-Forward Results
 
-| Portfolio | Aggregate net return | Net Sharpe | Max DD | Positive folds |
+| Portfolio | Aggregate net return | Annualized net Sharpe | Max DD | Positive folds |
 |---|---:|---:|---:|---:|
 | UBL only | -2.69% | -0.39 | 5.36% | 2 / 4 |
 | Selected blend | -0.60% | -0.07 | 4.30% | 2 / 4 |
@@ -129,7 +129,7 @@ concentration.
 
 On 421 matched full-sample dates:
 
-| Portfolio | Base Sharpe | One-additional-day-delay Sharpe |
+| Portfolio | Base annualized net Sharpe | One-additional-day-delay Sharpe |
 |---|---:|---:|
 | UBL only | 1.15 | -0.07 |
 | Selected blend | 1.65 | 0.46 |
@@ -150,18 +150,18 @@ LOWVOL sleeve.
 
 ## Role Of LOWVOL_60
 
-Standalone LOWVOL_60 had validation net Sharpe 0.08 and holdout net Sharpe 2.22.
-The difference between periods is too large to treat LOWVOL_60 as a stable
-standalone result. It is evaluated here as a fixed defensive sleeve relative to
-UBL on the same dates.
+Standalone LOWVOL_60 had validation annualized net Sharpe of 0.08 and Sharpe of
+2.22 in the observed holdout. The difference is too large to treat LOWVOL_60 as
+a stable standalone result. It is evaluated here as a 20% defensive sleeve
+relative to UBL on the same dates.
 
-LOWVOL_20 produced higher observed values in some tests but was
-preregistered as robustness-only and remained in that role after evaluation.
+LOWVOL_20 produced higher observed values in some tests but was designated in
+advance as a robustness comparison and remained in that role after evaluation.
 
 ## Interpretation
 
-Within the observed sample, adding the frozen 20% LOWVOL_60 risk sleeve was
-associated with higher holdout Sharpe, lower drawdown and turnover, greater
+Within the observed sample, adding the pre-specified 20% LOWVOL_60 risk sleeve
+was associated with higher holdout Sharpe, lower drawdown and turnover, greater
 break-even cost, and lower PnL concentration relative to UBL alone.
 
 The analysis does not establish:
@@ -173,12 +173,13 @@ The analysis does not establish:
 - resilience to realistic borrow and impact costs;
 - future performance probability of 95.2%.
 
-The next planned evaluation is unchanged-rule replication on new,
-adjustment-verified data with explicit borrow and execution modeling.
+The most informative next evidence would be unchanged-rule replication on new
+data with independently checked corporate-action adjustments and explicit
+borrow and execution modeling.
 
-## Public Evidence
+## Published Results
 
-Every number above is available in
-[the aggregate evidence bundle](../../examples/sample_outputs/ubl_lowvol_study/README.md).
-No security identifiers or private factor values are required to regenerate the
-plots.
+The values above are available in the
+[aggregate result bundle](../../examples/sample_outputs/ubl_lowvol_study/README.md).
+The plots can be recreated without security identifiers, report-derived factor
+implementations, or licensed market data.

@@ -1,8 +1,8 @@
 # Methodology
 
-This document defines the public research contract behind the predefined UBL
-plus LOWVOL_60 comparison. It is designed to prevent timing, sign, metric, and
-transaction-cost conventions from changing between experiments.
+This document summarizes the methods used in the UBL plus LOWVOL_60 comparison.
+Timing, factor direction, metric definitions, and transaction-cost conventions
+are held consistent across the reported analyses.
 
 ## Point-in-Time Timing
 
@@ -35,7 +35,7 @@ LOWVOL_60 uses 60 prior daily returns and a 20-trading-day holding horizon with
 20 staggered offsets. Warm-up observations may construct a score but may not
 enter the evaluation return sample.
 
-## Direction Contract
+## Factor Direction
 
 Every strategy stores:
 
@@ -44,7 +44,7 @@ raw_factor_value
 alpha_score
 ```
 
-The public invariant is:
+The orientation convention is:
 
 ```text
 higher alpha_score = higher expected return
@@ -71,14 +71,14 @@ aggregate public files contain no ticker identifiers.
 
 ## Chronological Splits
 
-| Split | Contract dates | Effective common observations |
+| Split | Dates | Effective common observations |
 |---|---|---:|
 | Train | 2020-01-02 to 2020-12-30 | 180 |
 | Validation | 2021-01-04 to 2021-06-29 | 111 |
-| Research holdout | 2021-07-01 to 2022-01-21 | 133 |
+| Observed holdout | 2021-07-01 to 2022-01-21 | 133 |
 
 The effective common sample begins after required history is available. Training
-fits volatility scales. Validation chooses among preregistered implementation
+fits volatility scales. Validation chooses among pre-specified implementation
 rules. The holdout was evaluated once for the combined-portfolio comparison,
 but it has now been viewed and cannot be reused for further selection.
 
@@ -147,7 +147,7 @@ mean(gross_return) / mean(full_turnover) * 10,000
 ## Metrics
 
 - **Net total return:** compounded product of `1 + net_return` minus one.
-- **Net Sharpe 0rf:** `sqrt(252) * mean(net_return) / std(net_return)`.
+- **Annualized net Sharpe, 0% cash hurdle:** `sqrt(252) * mean(net_return) / std(net_return)`.
 - **Net max drawdown:** deepest peak-to-trough decline in compounded net NAV.
 - **Pearson IC:** cross-sectional Pearson correlation of score and forward return.
 - **RankIC:** cross-sectional Spearman rank correlation.
@@ -187,8 +187,8 @@ The committed aggregate CSVs are the numerical inputs for every public table
 and figure, so `examples/render_public_results.py` can regenerate the figures
 without private data.
 
-The public sample package can validate generic score timing, portfolio
-accounting, metrics, and report generation on synthetic or user-supplied
-oriented scores. It does not construct the private factors or reproduce the
-security-level backtest because raw market data, holdings, private factor
-values, exact UBL formulas, and the local adapter engine are excluded.
+The compact reference package validates score timing, portfolio accounting,
+metrics, and report generation on synthetic or user-supplied oriented scores.
+It does not construct the report-derived factors or reproduce the security-level
+backtest because licensed market data, holdings, factor values, and the internal
+research engine are excluded.

@@ -2,21 +2,21 @@
 
 ## Included In The Public Repository
 
-- a small formula-agnostic Python package for score validation, portfolio
-  accounting, metrics, and visualization;
+- a compact, strategy-agnostic reference package for score validation,
+  portfolio accounting, metrics, and visualization;
 - an anonymous synthetic example and focused tests;
 - a builder and renderer for aggregate result files;
 - research methodology and portfolio-accounting definitions;
 - UBL, PaperUBL, and UBL plus LOWVOL case studies;
 - aggregate return, turnover, cost, bootstrap, and walk-forward data;
 - six portfolio-comparison figures;
-- candidate decisions, limitations, and report-reproduction templates.
+- candidate results, limitations, and report-reproduction templates.
 
 ## Retained Locally
 
 - raw daily and intraday market data;
 - security identifiers, private weights, and trade ledgers;
-- exact private UBL formulas and factor values;
+- report-derived factor implementations, licensed data, and factor values;
 - strategy constructors, family registries, and parameter defaults;
 - the local factor adapter and backtest engine;
 - the strategy-aware runner and visualizer;
@@ -26,8 +26,8 @@
 - local source-version and output-hash records.
 
 The public package starts from precomputed, oriented `alpha_score` values. It
-demonstrates research mechanics but does not reproduce the private
-security-level strategy engine.
+demonstrates research mechanics but does not reproduce the internal
+security-level research engine.
 
 ## Result Boundary
 
@@ -36,8 +36,8 @@ private snapshot, source state, configuration, dependency lock, and curated
 inputs. The detailed build record remains local.
 
 The published tables and figures can be inspected and regenerated from the
-included aggregate CSVs. They do not make the omitted formulas, holdings, raw
-data, or private engine reproducible.
+included aggregate CSVs. They do not make the omitted factor implementations,
+holdings, licensed data, or internal engine reproducible.
 
 ## Release Pipeline
 

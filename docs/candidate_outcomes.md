@@ -1,34 +1,33 @@
-# Candidate Outcomes
+# Candidate Results
 
-This note records the current research status of supporting factor candidates and
-timing diagnostics. A candidate is not classified from one Sharpe ratio. The
-assessment separates cross-sectional evidence, executable standalone returns,
-common-date implementation, incremental information, and contribution to the
-frozen UBL portfolio.
+This note compares the supporting factor candidates and timing diagnostics used
+around the UBL portfolio. Interpretation is based on cross-sectional evidence,
+standalone returns, common-date implementation, incremental information, and
+portfolio contribution rather than a single Sharpe ratio.
 
 All results use the point-in-time and metric conventions in
 [methodology.md](methodology.md). LOWVOL results are promising, but remain
 research evidence rather than audited trading performance.
 
-## Current Candidate Status
+## Summary
 
-| Candidate | Current role | Status | Main reason |
+| Candidate | Research use | Outcome | Interpretation |
 |---|---|---|---|
-| LOWVOL_60 | Defensive sleeve in the selected 80/20 portfolio | Provisional selected candidate | Improves UBL Sharpe, drawdown, turnover, cost tolerance, and concentration on common dates |
-| LOWVOL_20 | Shorter-window comparison | Retained robustness candidate | Stronger observed standalone statistics, but was not preregistered as the headline sleeve |
-| MOM_60_5 | Medium-term continuation test | Not selected | Negative validation RankIC and negative gross return |
-| MOM_120_20 | Longer continuation test | Not selected | Negative validation RankIC and weak offset breadth |
-| Early unlagged UBL diagnostics | Timing control | Superseded | Factor and return labels did not describe an executable same-period trade |
+| LOWVOL_60 | Defensive sleeve in the selected 80/20 portfolio | Provisionally included | Improves UBL Sharpe, drawdown, turnover, cost tolerance, and concentration on common dates |
+| LOWVOL_20 | Shorter-window robustness comparison | Retained for comparison | Stronger observed standalone statistics, but was not pre-specified as the primary sleeve |
+| MOM_60_5 | Medium-term continuation test | Not included | Negative validation RankIC and negative gross return |
+| MOM_120_20 | Longer continuation test | Not included | Negative validation RankIC and weak offset breadth |
+| Early unlagged UBL diagnostics | Timing diagnostic | Superseded | Factor and return labels did not describe an executable same-period trade |
 
 ## Low-Volatility Candidates
 
-### Frozen Research Contract
+### Pre-Specified Factor Definitions
 
-The low-volatility hypothesis was fixed before evaluation:
+The factor definitions and directions were set before evaluation:
 
 - `LOWVOL_60` ranks stocks using a 60-day realized-volatility window and is the
   slower primary specification.
-- `LOWVOL_20` uses a 20-day window and was frozen as a robustness specification.
+- `LOWVOL_20` uses a 20-day window and was pre-specified as a robustness comparison.
 - Higher score always means lower realized volatility and higher expected
   return; the sign was not reversed after seeing results.
 - Both candidates use a 20-trading-day holding horizon, 20 staggered offsets,
@@ -49,7 +48,7 @@ provisional.
 | LOWVOL_60 | 0.1031 | 0.0721 | 0.1427 | 61.5% | 1.45 |
 | LOWVOL_20 | 0.0941 | 0.1069 | 0.1619 | 74.0% | 2.05 |
 
-Both predefined positive directions survive train and validation. The
+Both pre-specified positive directions survive train and validation. The
 validation decile ordering is also positive: the Spearman correlation between
 decile number and average return is 0.588 for LOWVOL_60 and 0.770 for
 LOWVOL_20. Adjacent deciles increase in 5/9 and 6/9 comparisons respectively.
@@ -84,7 +83,7 @@ not a fresh out-of-sample result.
 ### Common-Date Reconciliation
 
 The attractive full-validation result does not transfer uniformly to the dates
-available to the frozen UBL portfolio. The table below uses the same 7.5 bps
+available to the selected UBL portfolio. The table below uses the same 7.5 bps
 weight-change policy before and after restricting to the 111 UBL-common dates.
 
 | Candidate | Full validation net return | Common-date net return | Common-date net Sharpe | Early four-date PnL share |
@@ -121,16 +120,16 @@ validation RankIC from 0.072 to 0.040 and net Sharpe from 1.008 to 0.084.
 Accordingly, LOWVOL_60 is better interpreted as a broad defensive or risk-premium
 sleeve than as a clean stock-specific alpha.
 
-### Contribution To The Frozen UBL Portfolio
+### Contribution To The Selected UBL Portfolio
 
-The selected test combines security-level weights using training-only
+The selected portfolio comparison combines security-level weights using training-only
 volatility scales and fixed 80% UBL / 20% LOWVOL_60 risk budgets. Turnover and
 costs are calculated after aggregate trade netting.
 
 | Sample | UBL net Sharpe | Blend net Sharpe | UBL max DD | Blend max DD | UBL full turnover | Blend full turnover |
 |---|---:|---:|---:|---:|---:|---:|
 | Validation | 1.537 | 1.692 | 2.66% | 2.43% | 0.563 | 0.496 |
-| Research holdout | 0.597 | 1.358 | 4.82% | 4.05% | 0.532 | 0.462 |
+| Observed holdout | 0.597 | 1.358 | 4.82% | 4.05% | 0.532 | 0.462 |
 | Full common sample | 1.143 | 1.644 | 5.47% | 4.30% | 0.552 | 0.482 |
 
 On the viewed 133-observation holdout, net return rises from 2.10% to 4.87% and
@@ -155,12 +154,12 @@ selection.
 
 Detailed aggregate evidence is available in the
 [UBL plus LOWVOL case study](case_studies/ubl_lowvol_portfolio.md) and the
-[public evidence bundle](../examples/sample_outputs/ubl_lowvol_study/README.md).
+[aggregate result bundle](../examples/sample_outputs/ubl_lowvol_study/README.md).
 
-### LOWVOL Decision
+### LOWVOL Interpretation
 
 `LOWVOL_60` remains the selected provisional research candidate because the
-slower window and headline role were frozen before evaluation, and the 80/20
+slower window and primary role were pre-specified before evaluation, and the 80/20
 blend improves several documented UBL weaknesses after aggregate costs.
 It is not classified as production-ready or as a stable standalone alpha.
 
@@ -169,7 +168,7 @@ results. It is not rejected, deleted, or relabeled as the selected sleeve. Its
 stronger observed performance is evidence to carry into an unchanged-rule
 replication rather than a reason to replace LOWVOL_60 inside the viewed sample.
 
-Promotion beyond provisional research inclusion requires:
+Evidence needed before treating this result as more than provisional includes:
 
 - verified adjusted prices and pre-2020 warm-up history;
 - unchanged-rule evaluation on genuinely new data;
@@ -185,7 +184,7 @@ MOM_60_5   = medium-term continuation excluding the latest 5 days
 MOM_120_20 = longer continuation excluding the latest 20 days
 ```
 
-The predefined positive direction was retained throughout evaluation.
+The pre-specified positive direction was retained throughout evaluation.
 
 | Candidate | Validation RankIC | Gross return | Net return | Net Sharpe | Positive offsets |
 |---|---:|---:|---:|---:|---:|
@@ -203,30 +202,30 @@ The fixed 80/20 UBL-plus-momentum comparison produced:
 | UBL + MOM_60_5 | 0.90 |
 | UBL + MOM_120_20 | 1.39 |
 
-Neither blend exceeded the UBL baseline validation Sharpe. These branches are
-closed under the current data and contract. Reopen triggers are a new sample or
-a distinct economic specification. Post-result sign reversal and searches over
-neighboring windows are outside the frozen test.
+Neither blend exceeded the UBL baseline validation Sharpe. The current sample
+does not support adding either momentum sleeve. A future test would require new
+data or a distinct economic hypothesis; sign reversal or neighboring-window
+searches after observing these results would be post hoc.
 
 ## Timing-Diagnostic Revision
 
 Early UBL IC and group-return plots used factor and return files whose date
 labels did not represent an executable same-period trade. Those plots remain in
-the local methodology archive and are not included in the public evidence.
+the local methodology archive and are not included in the published results.
 
-The corrected timing contract requires complete factor inputs before entry and
+The corrected timing convention requires complete factor inputs before entry and
 entry before exit. Historical extreme group NAV and unlagged IC values are
 excluded from the README and portfolio case study.
 
-## Decision Summary
+## Interpretation Summary
 
-- `LOWVOL_60`: selected provisional defensive candidate in the frozen 80/20
-  research portfolio; confirmation on new adjustment-verified data is pending.
+- `LOWVOL_60`: provisional defensive candidate in the pre-specified 80/20
+  research portfolio; confirmation requires new adjustment-verified data.
 - `LOWVOL_20`: retained robustness candidate with strong observed evidence; not
   promoted after result inspection.
-- `MOM_60_5`: not selected under the frozen positive-direction contract.
-- `MOM_120_20`: not selected under the frozen positive-direction contract.
+- `MOM_60_5`: not selected under the pre-specified positive direction.
+- `MOM_120_20`: not selected under the pre-specified positive direction.
 - Early unlagged UBL diagnostics: superseded by the point-in-time timing
-  contract.
+  convention.
 - No candidate sign was revised after evaluation.
 - Low correlation alone was never treated as sufficient for inclusion.
